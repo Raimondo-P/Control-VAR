@@ -1,0 +1,10 @@
+function z=mwdetrend(y,q);
+T = size(y,1);
+ym = mean(y);
+psi = psi_compute(size(y,1),q);
+ydm = y-ym;
+y_cos = (psi')*ydm;
+y_proj = psi*(inv(psi'*psi))*y_cos;
+y_proj_m = y_proj + ym;
+z.tau=y_proj_m;
+z.chat=y-z.tau;
