@@ -18,7 +18,7 @@ Control-VAR/
 
 - **`CVAR example/`** is the quickest entry point. It contains a stripped-down application estimating the impact of natural disasters on industrial production, with a single `setpath.m` initializer and five ready-to-run scripts. Start here if you want to understand how the toolbox works or adapt it to your own data.
 
-- **`REPLICATION FOLDER/`** contains the full replication code for all empirical applications and Monte Carlo simulations in Pala (2025), including multi-country comparisons (US, Germany, Italy, France, Spain) and the bias comparison between VAR-in-differences and CVAR. Both folders bundle the same `CVAR_toolbox` functions.
+- **`REPLICATION FOLDER/`** contains the full replication code for all empirical applications in Pala (2025). Both folders bundle the same `CVAR_toolbox` functions.
 
 ---
 
@@ -27,8 +27,6 @@ Control-VAR/
 - You want to estimate a **difference-in-differences treatment effect in a VAR/time series setting** where the treated and control series share a stochastic trend (are cointegrated).
 - You want to avoid the **attenuation bias** of VAR-in-differences when data are non-stationary: without an error-correction term, the level IRF does not converge to zero and identifies a filtered ATT rather than the true ATT.
 - You want **Cholesky identification** imposing that contemporaneous shocks to the outcome cannot move the treatment variable (the DiD exclusion restriction).
-- You want **IV identification** (`SVARivDiD`) as an alternative to Cholesky.
-- You want a **parallel trend diagnostic** (`CVARparalleltrend`) after estimation.
 - You are replicating or building on [Pala (2025)](https://arxiv.org/abs/2510.23762).
 
 ---
@@ -58,26 +56,8 @@ To use the toolbox on your own data:
 [IRbar, VARopt, IRinf, IRsup] = SVARCholDiD( ...
     D_t, y_t, y_c, 4, 20, colnames, [], foldername, 1, [1;-1]);
 
-% Parallel trend diagnostic
-CVARparalleltrend(VAR, D_t, colnames);
-```
 
 See `CVAR example/README.md` for the full function reference and the replication README for the Monte Carlo simulation details.
-
----
-
-## Why CVAR instead of VAR-in-differences
-
-When `y_t` (treated) and `y_c` (control) share a common I(1) trend, first-differencing removes the trend but also discards the error-correction mechanism. The level IRF recovered by cumulating a differenced VAR does not mean-revert, producing a spurious long-run effect. The CVAR enters `ec_{t-1} = y_{t-1} - y_{c,t-1}` as an exogenous regressor, which absorbs the shared trend while keeping the system in levels. By Granger's Representation Theorem the IRF then converges to zero at finite horizons (Johansen 1995, Thm 4.2; Pala 2025, Theorem 8).
-
-Monte Carlo evidence (2000 draws):
-
-| Estimator       | Bias  | Std   | IRF at h=10         |
-|-----------------|-------|-------|---------------------|
-| VAR-in-diff     | ~0.10 | ~0.16 | ≠ 0 (does not converge) |
-| CVAR            | ~0.00 | ~0.16 | ≈ 0 (converges)     |
-
----
 
 ## Requirements
 
