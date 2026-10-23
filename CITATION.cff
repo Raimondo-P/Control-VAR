@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this package or replicate results from the paper, please cite it as below."
+title: "Replication package for 'Control VAR: a counterfactual based approach to inference in macroeconomics'"
+type: software
+authors:
+  - family-names: Pala
+    given-names: Raimondo
+license: MIT
+repository-code: "https://github.com/Raimondo-P/Control-VAR"
+preferred-citation:
+  type: article
+  title: "Control VAR: a counterfactual based approach to inference in macroeconomics"
+  authors:
+    - family-names: Pala
+      given-names: Raimondo
+  year: 2026
+  url: "https://arxiv.org/abs/2510.23762"
