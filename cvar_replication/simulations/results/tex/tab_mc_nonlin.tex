@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering\small
+\caption{Non-linear effects. Bias at impact and after three months, and root mean squared error averaged over horizons 0 to 12, for the response to a policy innovation of size $\delta$, with the effect $u+\kappa u^2$. $\delta$ equal to minus one, one and two standard deviations of the innovation, $T=200$, 1000 replications, 12 lags.\label{tab:mc-nonlin}}
+\begin{tabular}{cc ccc ccc}
+\toprule
+ & & \multicolumn{3}{c}{Linear CVAR} & \multicolumn{3}{c}{Dictionary, Theorem \ref{thm:nonlin}}\\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+$\kappa$ & $\delta$ & Bias $h=0$ & Bias $h=3$ & RMSE & Bias $h=0$ & Bias $h=3$ & RMSE\\
+\midrule
+0.0 & -1.12 & $-$0.005 & 0.002 & 0.104 & $-$0.012 & 0.003 & 0.140\\
+0.0 & 1.12 & 0.005 & $-$0.002 & 0.104 & $-$0.002 & $-$0.000 & 0.140\\
+0.0 & 2.24 & 0.009 & $-$0.003 & 0.209 & $-$0.018 & 0.002 & 0.411\\
+0.5 & -1.12 & $-$0.130 & $-$0.062 & 0.132 & $-$0.019 & $-$0.012 & 0.145\\
+0.5 & 1.12 & $-$0.120 & $-$0.066 & 0.132 & $-$0.010 & $-$0.017 & 0.143\\
+0.5 & 2.24 & $-$0.491 & $-$0.260 & 0.361 & $-$0.049 & $-$0.064 & 0.424\\
+\bottomrule
+\end{tabular}
+\end{table}

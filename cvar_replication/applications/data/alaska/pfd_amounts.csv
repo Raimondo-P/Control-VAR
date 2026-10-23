@@ -1,0 +1,51 @@
+# Alaska Permanent Fund Dividend per person, nominal dollars, by payment year.
+# dividend = regular dividend; extra = one-off additions paid with it (2008 Resource Rebate, 2022 energy relief).
+# pay_month = month of the main disbursement (June in 1982, October afterwards).
+# These values were typed from recollection and MUST be checked against the PFD Division table
+# "Summary of Applications and Payments" (pfd.alaska.gov) before any result is used. Rows marked
+# check_closely are the ones I am least sure about. Lines starting with a hash are ignored.
+year,pay_month,dividend,extra,note
+1982,6,1000.00,0,
+1983,10,386.15,0,
+1984,10,331.29,0,
+1985,10,404.00,0,
+1986,10,556.26,0,
+1987,10,708.19,0,
+1988,10,826.93,0,
+1989,10,873.16,0,
+1990,10,952.63,0,
+1991,10,931.34,0,
+1992,10,915.84,0,
+1993,10,949.46,0,
+1994,10,983.90,0,
+1995,10,990.30,0,
+1996,10,1130.68,0,
+1997,10,1296.54,0,
+1998,10,1540.88,0,
+1999,10,1769.84,0,
+2000,10,1963.86,0,
+2001,10,1850.28,0,
+2002,10,1540.76,0,
+2003,10,1107.56,0,
+2004,10,919.84,0,
+2005,10,845.76,0,
+2006,10,1106.96,0,
+2007,10,1654.00,0,
+2008,10,2069.00,1200.00,Resource Rebate
+2009,10,1305.00,0,
+2010,10,1281.00,0,
+2011,10,1174.00,0,
+2012,10,878.00,0,
+2013,10,900.00,0,
+2014,10,1884.00,0,
+2015,10,2072.00,0,
+2016,10,1022.00,0,legislative cut (veto)
+2017,10,1100.00,0,
+2018,10,1600.00,0,
+2019,10,1606.00,0,
+2020,10,992.00,0,check_closely
+2021,10,1114.00,0,check_closely
+2022,10,2622.00,662.00,energy relief; check_closely
+2023,10,1312.00,0,check_closely
+2024,10,1702.00,0,check_closely
+2025,10,1000.00,0,check_closely

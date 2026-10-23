@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{Response of the unemployment rate to ten additional weeks of EB, average across states\label{tab:eb-avg}}
+\small
+\begin{tabular}{cccccc}
+\toprule
+Months & CVAR & VAR without controls & Width ratio & Weighted controls & Impulse causal effect \\
+\midrule
+0 & $-$0.00 & $-$0.03 & 0.86 & $-$0.01 & $-$0.00 \\
+\footnotesize & [$-$0.02, 0.01] & [$-$0.05, $-$0.01] & & [$-$0.03, 0.00] & [$-$0.02, 0.01] \\[2pt]
+6 & 0.03 & $-$0.23 & 0.68 & $-$0.24 & 0.00 \\
+\footnotesize & [$-$0.03, 0.11] & [$-$0.32, $-$0.11] & & [$-$0.34, $-$0.13] & [$-$0.01, 0.02] \\[2pt]
+12 & 0.05 & $-$0.33 & 0.69 & $-$0.37 & $-$0.00 \\
+\footnotesize & [$-$0.06, 0.17] & [$-$0.47, $-$0.13] & & [$-$0.51, $-$0.17] & [$-$0.02, 0.01] \\[2pt]
+24 & 0.03 & $-$0.52 & 0.65 & $-$0.51 & $-$0.01 \\
+\footnotesize & [$-$0.16, 0.17] & [$-$0.75, $-$0.25] & & [$-$0.69, $-$0.24] & [$-$0.03, 0.00] \\[2pt]
+36 & $-$0.02 & $-$0.68 & 0.70 & $-$0.61 & $-$0.01 \\
+\footnotesize & [$-$0.24, 0.13] & [$-$0.93, $-$0.40] & & [$-$0.79, $-$0.33] & [$-$0.04, $-$0.00] \\[2pt]
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize Average across the 37 states with at least twelve months of EB, October 2002 to December 2019. Cumulated response in percentage points to an EB innovation of ten weeks, with EUC ordered first. CVAR: VAR in the weeks of EUC and EB and the change in the cycle, equal weights on the controls. VAR without controls: the same with the change in the unemployment rate of the treated state. Weighted controls: response in the VAR with both the treated state and the weighted controls (Proposition \ref{prop:placebo}). Impulse causal effect of one week of EB from Theorem \ref{thm:direct}. 6 lags in every state; 90 percent bands from 999 draws of a residual bootstrap that draws the same months for every state.}
+\end{table}

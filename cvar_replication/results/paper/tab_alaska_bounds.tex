@@ -1,0 +1,28 @@
+\begin{table}[htbp]
+\centering
+\caption{Sensitivity to a bias specific to Alaska\label{tab:ak-bounds}}
+\footnotesize
+\begin{tabular}{lcccccc}
+\toprule
+Months & CVAR & Weighted & $\lambda=0$ & $\lambda=0.5$ & $\lambda=1$ & $\lambda$ reaching \\
+ & & controls & & & & zero \\
+\midrule
+\multicolumn{7}{l}{Employment-population ratio} \\
+12 & $-$0.09 & $-$0.14 & [$-$0.25, 0.07] & [$-$0.31, 0.15] & [$-$0.40, 0.25] & 0.00 \\
+24 & $-$0.16 & $-$0.24 & [$-$0.39, 0.09] & [$-$0.52, 0.22] & [$-$0.68, 0.39] & 0.00 \\
+\addlinespace
+\multicolumn{7}{l}{Participation rate} \\
+12 & $-$0.15 & $-$0.06 & [$-$0.29, $-$0.03] & [$-$0.33, 0.00] & [$-$0.36, 0.03] & 0.50 \\
+24 & $-$0.26 & $-$0.13 & [$-$0.45, $-$0.07] & [$-$0.53, $-$0.02] & [$-$0.61, 0.04] & 0.70 \\
+\addlinespace
+\multicolumn{7}{l}{Payroll employment} \\
+12 & 0.51 & $-$0.25 & [0.10, 0.87] & [$-$0.04, 1.00] & [$-$0.18, 1.14] & 0.36 \\
+24 & 0.88 & $-$0.51 & [0.21, 1.39] & [$-$0.06, 1.67] & [$-$0.35, 1.96] & 0.40 \\
+\addlinespace
+\multicolumn{7}{l}{Leisure and hospitality} \\
+12 & 1.13 & $-$0.96 & [0.52, 1.76] & [0.05, 2.40] & [$-$0.62, 3.11] & 0.54 \\
+24 & 1.80 & $-$1.86 & [0.81, 2.66] & [0.00, 3.97] & [$-$1.23, 5.33] & 0.51 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize From the VAR with Alaska and the weighted controls (Proposition \ref{prop:placebo}), 90 percent bands for the bounds of Proposition \ref{prop:bounds}, with the bias specific to Alaska at most $\lambda$ times the bias from the common trends, measured by the response of the weighted controls. Weights held at their estimates. Last column: smallest $\lambda$ at which the band contains zero.}
+\end{table}

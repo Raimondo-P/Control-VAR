@@ -1,0 +1,27 @@
+\begin{table}[H]
+\centering\small
+\caption{Test of the design: size-adjusted power at the local alternative $\rho=1-10/T$. Bound: power of the Neyman-Pearson test that knows the weights and the covariance \citep{ElliottJanssonPesavento2005}, computed in the triangular designs. ECR: error-correction $t$-test; Wald: \citet{Boswijk1994}. Other columns as in Table \ref{tab:mc-test-size}.\label{tab:mc-test-power}}
+\resizebox{\textwidth}{!}{\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rlc cccccccc}
+\toprule
+$T$ & Design & $\delta$ & Bound & CVAR test & Robust & PR & EG & Johansen & ECR & Wald\\
+\midrule
+200 & Triangular, $k=1$ & 0.0 & 0.724 & 0.664 & 0.523 & 0.408 & 0.229 & 0.108 & 0.257 & 0.214\\
+200 & Triangular, $k=1$ & 0.6 & 0.932 & 0.112 & 0.525 & 0.267 & 0.169 & 0.196 & 0.317 & 0.295\\
+200 & Triangular, $k=3$ & 0.0 & 0.769 & 0.561 & 0.416 & 0.166 & 0.160 & 0.085 & 0.160 & 0.114\\
+200 & Triangular, $k=3$ & 0.6 & 0.922 & 0.145 & 0.160 & 0.141 & 0.121 & 0.102 & 0.218 & 0.202\\
+200 & CVAR, $K=3$ & 0.0 &  & 0.181 & 0.115 & 0.152 & 0.155 & 0.083 & 0.107 & 0.083\\
+200 & CVAR, $K=3$ & 0.6 &  & 0.154 & 0.133 & 0.068 & 0.036 & 0.084 & 0.146 & 0.129\\
+200 & CVAR, $K=6$ & 0.0 &  & 0.248 & 0.131 & 0.125 & 0.123 & 0.037 & 0.121 & 0.088\\
+200 & CVAR, $K=6$ & 0.6 &  & 0.130 & 0.107 & 0.080 & 0.060 & 0.060 & 0.111 & 0.106\\
+400 & Triangular, $k=1$ & 0.0 & 0.714 & 0.653 & 0.494 & 0.396 & 0.232 & 0.115 & 0.230 & 0.212\\
+400 & Triangular, $k=1$ & 0.6 & 0.948 & 0.108 & 0.547 & 0.400 & 0.221 & 0.253 & 0.382 & 0.370\\
+400 & Triangular, $k=3$ & 0.0 & 0.624 & 0.551 & 0.380 & 0.182 & 0.160 & 0.068 & 0.213 & 0.124\\
+400 & Triangular, $k=3$ & 0.6 & 0.922 & 0.103 & 0.184 & 0.122 & 0.084 & 0.095 & 0.217 & 0.206\\
+400 & CVAR, $K=3$ & 0.0 &  & 0.233 & 0.131 & 0.177 & 0.198 & 0.118 & 0.198 & 0.144\\
+400 & CVAR, $K=3$ & 0.6 &  & 0.196 & 0.145 & 0.084 & 0.038 & 0.096 & 0.151 & 0.188\\
+400 & CVAR, $K=6$ & 0.0 &  & 0.324 & 0.232 & 0.091 & 0.125 & 0.060 & 0.133 & 0.094\\
+400 & CVAR, $K=6$ & 0.6 &  & 0.117 & 0.089 & 0.071 & 0.045 & 0.052 & 0.110 & 0.156\\
+\bottomrule
+\end{tabular}}
+\end{table}

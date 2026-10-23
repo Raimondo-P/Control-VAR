@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\caption{Pass-through of the LCFS cost to the California retail gasoline price\label{tab:california_main}}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Controls & Lags & Impact & 1 month & Width ratio \\
+\midrule
+Gulf Coast (PADD 3) & 4/4 & 0.99$^{\dagger}$ & 1.55$^{\dagger}$ & 0.56 \\
+\footnotesize  &  & [-0.21, 2.47] & [-0.42, 3.75] &  \\[2pt]
+PADDs 1 to 4 & 4/4 & 0.65 & 1.59$^{\dagger}$ & 0.53 \\
+\footnotesize  &  & [-0.46, 1.93] & [-0.28, 3.70] &  \\[2pt]
+Texas and Florida & 4/4 & 1.11$^{\dagger}$ & 1.68$^{\dagger}$ & 0.60 \\
+\footnotesize  &  & [-0.19, 2.67] & [-0.51, 4.02] &  \\[2pt]
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.95\textwidth}\footnotesize
+Note: cumulated response of the California retail price, in cents per gallon, to an increase of 1 cent per gallon in the LCFS cost, from the CVAR in the differenced branch with equal weights on the controls. Policy: the cost per gallon implied by the CARB formula before May 2024 and the cost reported by refiners to the California Energy Commission from then on, in monthly changes, unless stated otherwise. Lags: CVAR / VAR without controls. 90 percent residual bootstrap bands in brackets; $^{\dagger}$ the 68 percent band excludes zero; $^{*}$ the 90 percent band excludes zero. Width ratio: width of the CVAR band over that of the VAR without controls, at one month. The full paths are in Figure \ref{fig:california_main}, and robustness checks in Tables \ref{tab:california_robust} and \ref{tab:california_appendix}.
+\end{minipage}
+\end{table}

@@ -1,0 +1,26 @@
+\begin{table}[H]
+\centering\small
+\caption{Test of the design: rejection rates under the null ($g=0$) at the 5 percent level. CVAR test: statistic \eqref{eq:PT} with $\bar c=-7$ and the critical value of \citet{ERS1996}; bootstrap: sieve bootstrap p-value with an autoregression of order $p_T=\lceil16(T/200)^{1/3}\rceil$; robust: adaptive test of Appendix \ref{sec:supp-test}, with the critical value from the null with uncorrelated innovations of the same design, so that its size is nominal by construction when $\delta=0$; PR: ADF-GLS of \citet{PerronRodriguez2016} with their critical values (not tabulated for six regressors); EG: Engle-Granger with the critical values of \citet{MacKinnon2010}; Johansen: maximum eigenvalue test. $\delta$: correlation between the innovations of the cycle and those of the controls. 1000 replications, 199 bootstrap draws.\label{tab:mc-test-size}}
+\begin{tabular}{rlc cccccc}
+\toprule
+$T$ & Design & $\delta$ & CVAR test & Bootstrap & Robust & PR & EG & Johansen\\
+\midrule
+200 & Triangular, $k=1$ & 0.0 & 0.046 & 0.027 & 0.050 & 0.039 & 0.036 & 0.054\\
+200 & Triangular, $k=1$ & 0.6 & 0.058 & 0.031 & 0.063 & 0.044 & 0.042 & 0.087\\
+200 & Triangular, $k=3$ & 0.0 & 0.050 & 0.028 & 0.050 & 0.040 & 0.050 & 0.071\\
+200 & Triangular, $k=3$ & 0.6 & 0.032 & 0.018 & 0.036 & 0.029 & 0.030 & 0.062\\
+200 & CVAR, $K=3$ & 0.0 & 0.089 & 0.061 & 0.050 & 0.078 & 0.256 & 0.108\\
+200 & CVAR, $K=3$ & 0.6 & 0.093 & 0.055 & 0.045 & 0.077 & 0.290 & 0.112\\
+200 & CVAR, $K=6$ & 0.0 & 0.071 & 0.040 & 0.050 &  & 0.262 & 0.822\\
+200 & CVAR, $K=6$ & 0.6 & 0.091 & 0.045 & 0.058 &  & 0.311 & 0.815\\
+400 & Triangular, $k=1$ & 0.0 & 0.053 & 0.033 & 0.050 & 0.046 & 0.061 & 0.072\\
+400 & Triangular, $k=1$ & 0.6 & 0.035 & 0.030 & 0.031 & 0.042 & 0.037 & 0.056\\
+400 & Triangular, $k=3$ & 0.0 & 0.043 & 0.029 & 0.050 & 0.045 & 0.043 & 0.056\\
+400 & Triangular, $k=3$ & 0.6 & 0.055 & 0.032 & 0.055 & 0.045 & 0.049 & 0.061\\
+400 & CVAR, $K=3$ & 0.0 & 0.066 & 0.047 & 0.050 & 0.068 & 0.288 & 0.086\\
+400 & CVAR, $K=3$ & 0.6 & 0.090 & 0.054 & 0.052 & 0.090 & 0.341 & 0.097\\
+400 & CVAR, $K=6$ & 0.0 & 0.093 & 0.055 & 0.050 &  & 0.317 & 1.000\\
+400 & CVAR, $K=6$ & 0.6 & 0.083 & 0.059 & 0.041 &  & 0.392 & 1.000\\
+\bottomrule
+\end{tabular}
+\end{table}

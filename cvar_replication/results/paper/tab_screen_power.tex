@@ -1,0 +1,32 @@
+\begin{table}[htbp]
+\centering
+\caption{Size and power of the test of the design in panels built like the state data\label{tab:screen-power}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+Sample & Half-life & $c$ & \multicolumn{3}{c}{Equal weights} & \multicolumn{2}{c}{Estimated weights} \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-8}
+ & (years) & & Bootstrap & Residual & ERS & Bootstrap & Residual \\
+\midrule
+15 years & trend of its own & -- & 0.05 & 0.12 & 0.08 & 0.05 & 0.13 \\
+ & 1.1 & $-$9.0 & 0.20 & 0.37 & 0.38 & 0.16 & 0.35 \\
+ & 2.9 & $-$3.6 & 0.09 & 0.19 & 0.14 & 0.07 & 0.19 \\
+ & 5.7 & $-$1.8 & 0.07 & 0.16 & 0.10 & 0.04 & 0.19 \\
+ & 11.5 & $-$0.9 & 0.04 & 0.11 & 0.06 & 0.03 & 0.12 \\
+\addlinespace
+25 years & trend of its own & -- & 0.06 & 0.12 & 0.09 & 0.04 & 0.11 \\
+ & 1.1 & $-$15.0 & 0.40 & 0.59 & 0.56 & 0.26 & 0.56 \\
+ & 2.9 & $-$6.0 & 0.15 & 0.30 & 0.24 & 0.13 & 0.30 \\
+ & 5.7 & $-$3.0 & 0.08 & 0.18 & 0.13 & 0.09 & 0.17 \\
+ & 11.5 & $-$1.5 & 0.05 & 0.13 & 0.09 & 0.04 & 0.13 \\
+\addlinespace
+44 years & trend of its own & -- & 0.08 & 0.12 & 0.09 & 0.03 & 0.08 \\
+ & 1.1 & $-$26.4 & 0.63 & 0.82 & 0.82 & 0.46 & 0.69 \\
+ & 2.9 & $-$10.6 & 0.37 & 0.54 & 0.50 & 0.29 & 0.48 \\
+ & 5.7 & $-$5.3 & 0.16 & 0.28 & 0.25 & 0.13 & 0.27 \\
+ & 11.5 & $-$2.6 & 0.07 & 0.14 & 0.10 & 0.08 & 0.17 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize Rejection rates at 5 percent in 300 replications of monthly panels with one common stochastic trend, four controls that load on it with stationary noise, and a treated unit that follows the common trend plus a gap: a random walk (trend of its own: the rows give the size) or a stationary autoregression with the half-life shown, $c=T(\rho-1)$. Bootstrap: the sieve bootstrap of Proposition \ref{prop:sieve}, 199 draws. Residual: a sieve bootstrap that takes the innovations from the unrestricted autoregression in levels and imposes the unit root when rebuilding the series \citep{PaparoditisPolitis2003,PalmSmeekesUrbain2008}. ERS: the asymptotic critical value of \citet{ERS1996}, valid only without estimated weights.}
+\end{table}

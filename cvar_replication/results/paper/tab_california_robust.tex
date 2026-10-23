@@ -1,0 +1,53 @@
+\begin{table}[htbp]
+\centering
+\caption{Pass-through of the LCFS cost: samples and controls}
+\label{tab:california_robust}
+\small
+\begin{tabular}{lccccc}
+\toprule
+ & Lags & Impact & 1 month & 12 months & Width ratio \\
+\midrule
+\multicolumn{6}{l}{Main specification} \\
+\midrule
+Gulf Coast (PADD 3) & 4/4 & 0.99$^{\dagger}$ & 1.55$^{\dagger}$ & 0.88 & 0.43 \\
+\footnotesize  &  & [-0.21, 2.47] & [-0.42, 3.75] & [-1.08, 3.19] &  \\[2pt]
+PADDs 1 to 4 & 4/4 & 0.65 & 1.59$^{\dagger}$ & 0.87 & 0.39 \\
+\footnotesize  &  & [-0.46, 1.93] & [-0.28, 3.70] & [-0.97, 2.92] &  \\[2pt]
+Texas and Florida & 4/4 & 1.11$^{\dagger}$ & 1.68$^{\dagger}$ & 1.03 & 0.46 \\
+\footnotesize  &  & [-0.19, 2.67] & [-0.51, 4.02] & [-1.03, 3.48] &  \\[2pt]
+\midrule
+\multicolumn{6}{l}{Samples} \\
+\midrule
+Gulf Coast (PADD 3), 2017 onward & 3/3 & 1.30$^{*}$ & 1.62$^{\dagger}$ & 1.45$^{\dagger}$ & 0.41 \\
+\footnotesize  &  & [0.15, 2.82] & [-0.53, 3.98] & [-0.73, 3.81] &  \\[2pt]
+Gulf Coast (PADD 3), 2020 onward & 2/2 & 1.78$^{*}$ & 2.15$^{\dagger}$ & 1.38$^{\dagger}$ & 0.44 \\
+\footnotesize  &  & [0.39, 3.39] & [-0.18, 4.54] & [-0.54, 3.48] &  \\[2pt]
+Gulf Coast (PADD 3), 2014 to 2024 & 12/12 & 2.22$^{\dagger}$ & 1.57 & 1.72 & 0.45 \\
+\footnotesize  &  & [-0.84, 5.41] & [-2.42, 5.96] & [-2.85, 8.15] &  \\[2pt]
+Gulf Coast (PADD 3), 2020 to 2022 dummied out & 2/2 & 0.68 & 1.84$^{\dagger}$ & 1.53$^{\dagger}$ & 0.66 \\
+\footnotesize  &  & [-0.95, 2.05] & [-0.92, 4.25] & [-1.12, 3.84] &  \\[2pt]
+PADDs 1 to 4, 2017 onward & 4/3 & 1.02$^{\dagger}$ & 1.56$^{\dagger}$ & 1.31$^{\dagger}$ & 0.32 \\
+\footnotesize  &  & [-0.10, 2.39] & [-0.24, 3.63] & [-0.35, 3.21] &  \\[2pt]
+PADDs 1 to 4, 2020 onward & 2/2 & 1.49$^{*}$ & 2.21$^{\dagger}$ & 1.44$^{\dagger}$ & 0.45 \\
+\footnotesize  &  & [0.19, 3.11] & [-0.03, 4.39] & [-0.47, 3.60] &  \\[2pt]
+PADDs 1 to 4, 2014 to 2024 & 12/12 & 1.09 & 1.15 & 1.53 & 0.43 \\
+\footnotesize  &  & [-1.81, 4.24] & [-2.79, 5.39] & [-2.87, 7.60] &  \\[2pt]
+PADDs 1 to 4, 2020 to 2022 dummied out & 2/2 & 0.30 & 1.70$^{\dagger}$ & 1.36 & 0.65 \\
+\footnotesize  &  & [-1.34, 1.66] & [-0.88, 3.79] & [-1.28, 3.61] &  \\[2pt]
+\midrule
+\multicolumn{6}{l}{Leaving one PADD out} \\
+\midrule
+PADDs 1 to 4 without East Coast & 4/4 & 0.55 & 1.59$^{\dagger}$ & 0.81 & 0.40 \\
+\footnotesize  &  & [-0.50, 1.75] & [-0.18, 3.69] & [-1.08, 2.83] &  \\[2pt]
+PADDs 1 to 4 without Midwest & 4/4 & 0.60 & 1.47$^{\dagger}$ & 0.76 & 0.41 \\
+\footnotesize  &  & [-0.49, 1.92] & [-0.43, 3.58] & [-1.19, 2.84] &  \\[2pt]
+PADDs 1 to 4 without Gulf Coast & 4/4 & 0.53 & 1.58$^{\dagger}$ & 0.86 & 0.39 \\
+\footnotesize  &  & [-0.62, 1.82] & [-0.31, 3.71] & [-0.99, 2.88] &  \\[2pt]
+PADDs 1 to 4 without Rocky Mountain & 4/4 & 0.91$^{\dagger}$ & 1.68$^{\dagger}$ & 1.02 & 0.41 \\
+\footnotesize  &  & [-0.30, 2.41] & [-0.32, 3.91] & [-0.87, 3.19] &  \\[2pt]
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.95\textwidth}\footnotesize
+Note: cumulated response of the California retail price, in cents per gallon, to an increase of 1 cent per gallon in the LCFS cost, from the CVAR in the differenced branch with equal weights on the controls. Policy: the cost per gallon implied by the CARB formula before May 2024 and the cost reported by refiners to the California Energy Commission from then on, in monthly changes, unless stated otherwise. Lags: CVAR / VAR without controls. 90 percent residual bootstrap bands in brackets; $^{\dagger}$ the 68 percent band excludes zero; $^{*}$ the 90 percent band excludes zero. Width ratio: width of the CVAR band over that of the VAR without controls, at 12 months.
+\end{minipage}
+\end{table}

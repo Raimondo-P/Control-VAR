@@ -1,0 +1,34 @@
+\begin{table}[htbp]
+\centering
+\caption{Coverage of the 90 percent bands for $\gamma_h$ with estimated weights: bootstrap schemes\label{tab:mc-joint}}
+\small
+\begin{tabular}{lccccccc}
+\toprule
+ & \multicolumn{6}{c}{Coverage, months after the surprise} & Width \\
+\cmidrule(lr){2-7}\cmidrule(lr){8-8}
+ & 0 & 1 & 3 & 6 & 12 & 24 & 12 \\
+\midrule
+\multicolumn{8}{l}{$T=200$, $\phi=0.3$} \\
+Known weights & 0.89 & 0.89 & 0.90 & 0.85 & 0.89 & 0.85 & 0.41 \\
+Fixed weights & 0.87 & 0.88 & 0.88 & 0.84 & 0.87 & 0.81 & 0.38 \\
+Re-estimated, controls fixed & 0.90 & 0.89 & 0.89 & 0.86 & 0.91 & 0.83 & 0.40 \\
+Joint, not recentred & 0.90 & 0.89 & 0.89 & 0.85 & 0.89 & 0.81 & 0.40 \\
+Joint, recentred (Theorem \ref{thm:joint}) & 0.89 & 0.88 & 0.88 & 0.85 & 0.88 & 0.82 & 0.40 \\
+\midrule
+\multicolumn{8}{l}{$T=200$, $\phi=0.45$} \\
+Known weights & 0.90 & 0.89 & 0.90 & 0.84 & 0.86 & 0.61 & 0.47 \\
+Fixed weights & 0.88 & 0.87 & 0.88 & 0.86 & 0.87 & 0.61 & 0.44 \\
+Re-estimated, controls fixed & 0.90 & 0.89 & 0.89 & 0.87 & 0.91 & 0.64 & 0.44 \\
+Joint, not recentred & 0.90 & 0.89 & 0.90 & 0.85 & 0.90 & 0.64 & 0.45 \\
+Joint, recentred (Theorem \ref{thm:joint}) & 0.88 & 0.87 & 0.89 & 0.83 & 0.88 & 0.63 & 0.45 \\
+\midrule
+\multicolumn{8}{l}{$T=400$, $\phi=0.3$} \\
+Known weights & 0.88 & 0.89 & 0.90 & 0.87 & 0.90 & 0.77 & 0.28 \\
+Fixed weights & 0.88 & 0.89 & 0.89 & 0.86 & 0.89 & 0.75 & 0.27 \\
+Re-estimated, controls fixed & 0.88 & 0.90 & 0.89 & 0.87 & 0.90 & 0.75 & 0.27 \\
+Joint, not recentred & 0.89 & 0.90 & 0.90 & 0.88 & 0.90 & 0.76 & 0.28 \\
+Joint, recentred (Theorem \ref{thm:joint}) & 0.88 & 0.90 & 0.90 & 0.89 & 0.88 & 0.76 & 0.28 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize Six controls with one cointegrating relation among them, feedback $\phi$ from the lagged cycle to the policy, 12 lags in the VAR of the CVAR and in the joint VAR, 500 replications and 499 bootstrap draws. Known weights: pseudo-true weights. Fixed weights: estimated weights held fixed. Re-estimated, controls fixed: weights re-estimated in every draw with the controls at their observed values. Joint: the controls are regenerated with the policies and the cycle and the weights re-estimated, without recentring, or with the draws recentred at the response of the bootstrap world as in Theorem \ref{thm:joint}.}
+\end{table}

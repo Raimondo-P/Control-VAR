@@ -1,0 +1,20 @@
+\begin{table}[H]
+\centering\small
+\caption{Stationarity diagnostics for the estimated cycle. Rejection frequencies at 5 percent with the standard critical values (Engle-Granger for ADF, 0.463 for KPSS) and with simulated critical values (from the unit-root design for ADF and from the design with $\rho=0.9$ for KPSS). $\rho=1$: the counterfactual cycle has a unit root. $\rho=0.9$: it is a stationary AR(1). The ADF test takes a unit root as the null hypothesis, the KPSS test stationarity. Six controls, weights estimated by constrained dynamic least squares with policy terms, 1000 replications.\label{tab:mc-stat}}
+\begin{tabular}{ll cc cc}
+\toprule
+ & & \multicolumn{2}{c}{Standard critical values} & \multicolumn{2}{c}{Simulated critical values}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+$T$ & Statistic & $\rho=1$ & $\rho=0.9$ & $\rho=1$ & $\rho=0.9$\\
+\midrule
+200 & ADF, cycle & 0.22 & 0.77 & 0.05 & 0.33\\
+200 & ADF, cycle net of policy & 0.47 & 0.94 & 0.05 & 0.33\\
+200 & KPSS, cycle & 0.18 & 0.06 & 0.17 & 0.05\\
+200 & KPSS, cycle net of policy & 0.09 & 0.00 & 0.37 & 0.05\\
+400 & ADF, cycle & 0.36 & 0.99 & 0.05 & 0.86\\
+400 & ADF, cycle net of policy & 0.45 & 1.00 & 0.05 & 0.89\\
+400 & KPSS, cycle & 0.25 & 0.02 & 0.37 & 0.05\\
+400 & KPSS, cycle net of policy & 0.19 & 0.00 & 0.64 & 0.05\\
+\bottomrule
+\end{tabular}
+\end{table}

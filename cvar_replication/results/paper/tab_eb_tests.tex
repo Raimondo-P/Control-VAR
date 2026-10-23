@@ -1,0 +1,26 @@
+\begin{table}[htbp]
+\centering
+\caption{Unit roots and the test of the design\label{tab:eb-tests}}
+\small
+\begin{tabular}{llcc}
+\toprule
+Series & Specification & Rejections at 5 percent & Median p-value \\
+\midrule
+Unemployment rate, treated states & ERS & 4 of 37 & 0.09 \\
+Unemployment rate, controls & ERS & 2 of 7 & 0.08 \\
+\midrule
+Cycle, estimated weights, no level shifts & $q=12$ & 0 of 37 & 0.20 \\
+Cycle, estimated weights, no level shifts & $q=6$ & 0 of 37 & 0.23 \\
+Cycle, estimated weights, no level shifts & $q=3$ & 1 of 37 & 0.22 \\
+Cycle, estimated weights, no level shifts & $q=0$ & 0 of 37 & 0.21 \\
+Cycle, estimated weights, level shifts & $q=12$ & 0 of 37 & 0.21 \\
+Cycle, estimated weights, level shifts & $q=6$ & 0 of 37 & 0.24 \\
+Cycle, estimated weights, level shifts & $q=3$ & 1 of 37 & 0.22 \\
+Cycle, estimated weights, level shifts & $q=0$ & 0 of 37 & 0.21 \\
+\midrule
+Cycle, equal weights & $q=12$ & 0 of 37 & 0.20 \\
+Cycle, equal weights, no policy terms & & 1 of 37 & 0.19 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize ERS: point-optimal test of \citet{ERS1996} with a constant, on the unemployment rate. Cycle: test of Section \ref{sec:test} of the null that the treated state has a stochastic trend of its own, with the current value and $q$ lags of the weeks of EUC and EB, controls the never-triggered states that do not border the treated state, weights estimated by \eqref{eq:dols} or set equal. Level shifts: sequential sup-Wald tests on the cycle net of the policy terms. Sieve-bootstrap p-values.}
+\end{table}

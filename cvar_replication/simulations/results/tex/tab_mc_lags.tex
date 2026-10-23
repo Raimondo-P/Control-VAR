@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\caption{CVAR with different lag lengths. Bias of the response and coverage of the 90 percent bands for $\gamma_h$, bootstrap with re-estimated weights. $T=200$, $K=6$, $r=5$, $\phi=0.3$, 500 replications.\label{tab:mc-lags}}
+\begin{tabular}{rr cc cc cc}
+\toprule
+ & & \multicolumn{2}{c}{Akaike (mean 1.3)} & \multicolumn{2}{c}{8 lags} & \multicolumn{2}{c}{12 lags}\\
+$h$ & $\gamma_h$ & Bias & Coverage & Bias & Coverage & Bias & Coverage\\
+\midrule
+0 & 0.198 & $-$0.002 & 0.91 & 0.001 & 0.90 & 0.003 & 0.90\\
+1 & 0.267 & 0.046 & 0.79 & $-$0.002 & 0.89 & 0.001 & 0.89\\
+3 & 0.282 & 0.006 & 0.83 & $-$0.004 & 0.90 & 0.001 & 0.89\\
+6 & 0.231 & $-$0.061 & 0.57 & $-$0.010 & 0.88 & $-$0.006 & 0.86\\
+12 & 0.154 & $-$0.093 & 0.24 & $-$0.046 & 0.75 & $-$0.004 & 0.91\\
+24 & 0.067 & $-$0.056 & 0.13 & $-$0.041 & 0.60 & $-$0.040 & 0.83\\
+\bottomrule
+\end{tabular}
+\end{table}

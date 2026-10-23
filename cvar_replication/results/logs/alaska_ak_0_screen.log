@@ -1,0 +1,95 @@
+check: largest gap between the LAUS ratio and employment/population x 100: nan
+  epop: interpolated ['2025-10']
+  ur: interpolated ['2025-10']
+  lfpr: interpolated ['2025-10']
+  CPI: interpolated ['2025-10']
+dividend months: 44, from 1982-06 to 2025-10
+180 tests, B = 999
+
+Bootstrap p-values of the test of the design (null: Alaska has a stochastic trend of its own)
+sample                   full                                        pre2016                                        pre2020                                  
+spec             alaska_alone  equal estimated estimated_shifts alaska_alone  equal estimated estimated_shifts alaska_alone  equal estimated estimated_shifts
+outcome controls                                                                                                                                             
+epop    jm_emp            NaN  0.152     0.185            0.185          NaN  0.140     0.234            0.234          NaN  0.245     0.416            0.403
+        jm_pt             NaN  0.315     0.440            0.412          NaN  0.306     0.757            0.751          NaN  0.223     0.660            0.738
+        none            0.409    NaN       NaN              NaN        0.616    NaN       NaN              NaN        0.570    NaN       NaN              NaN
+        wa                NaN  0.268     0.225            0.192          NaN  0.246     0.424            0.409          NaN  0.310     0.457            0.453
+leisure jm_emp            NaN  0.138     0.174            0.174          NaN  0.284     0.649            0.649          NaN  0.270     0.680            0.680
+        jm_pt             NaN  0.025     0.062            0.062          NaN  0.336     0.584            0.794          NaN  0.266     0.930            0.930
+        none            0.478    NaN       NaN              NaN        0.453    NaN       NaN              NaN        0.504    NaN       NaN              NaN
+        wa                NaN  0.172     0.391            0.270          NaN  0.188     0.544            0.496          NaN  0.206     0.730            0.740
+lfpr    jm_emp            NaN  0.465     0.585            0.585          NaN  0.406     0.628            0.628          NaN  0.343     0.546            0.546
+        jm_pt             NaN  0.235     0.148            0.144          NaN  0.307     0.824            0.851          NaN  0.227     0.627            0.634
+        none            0.588    NaN       NaN              NaN        0.696    NaN       NaN              NaN        0.561    NaN       NaN              NaN
+        wa                NaN  0.379     0.630            0.632          NaN  0.419     0.642            0.664          NaN  0.349     0.547            0.553
+nonfarm jm_emp            NaN  0.373     0.226            0.230          NaN  0.434     0.102            0.102          NaN  0.301     0.353            0.353
+        jm_pt             NaN  0.411     0.348            0.348          NaN  0.769     0.827            0.827          NaN  0.341     0.434            0.434
+        none            0.559    NaN       NaN              NaN        0.290    NaN       NaN              NaN        0.580    NaN       NaN              NaN
+        wa                NaN  0.284     0.331            0.347          NaN  0.034     0.168            0.119          NaN  0.118     0.333            0.390
+retail  jm_emp            NaN  0.327     0.643            0.633          NaN  0.160     0.744            0.744          NaN  0.221     0.589            0.589
+        jm_pt             NaN  0.655     0.461            0.652          NaN  0.468     0.935            0.935          NaN  0.505     0.736            0.736
+        none            0.699    NaN       NaN              NaN        0.548    NaN       NaN              NaN        0.685    NaN       NaN              NaN
+        wa                NaN  0.230     0.683            0.690          NaN  0.364     0.917            0.917          NaN  0.149     0.867            0.873
+ur      jm_emp            NaN  0.029     0.168            0.139          NaN  0.057     0.382            0.377          NaN  0.047     0.388            0.311
+        jm_pt             NaN  0.078     0.377            0.365          NaN  0.131     0.454            0.452          NaN  0.107     0.432            0.427
+        none            0.275    NaN       NaN              NaN        0.290    NaN       NaN              NaN        0.315    NaN       NaN              NaN
+        wa                NaN  0.012     0.171            0.144          NaN  0.078     0.270            0.265          NaN  0.105     0.300            0.301
+
+Estimated weights (no level shifts):
+outcome  sample controls  rank  sum_weights                            weights
+   epop    full       wa   0.0     0.684381                            WA 0.68
+   epop    full   jm_emp   1.0     0.915246          MN 0.39, NV 0.28, WY 0.25
+   epop    full    jm_pt   0.0     0.705719                   WY 0.39, NV 0.31
+   epop pre2020       wa   0.0     0.577279                            WA 0.58
+   epop pre2020   jm_emp   3.0     0.985865          MN 0.40, WY 0.37, NV 0.22
+   epop pre2020    jm_pt   0.0     0.851057                   WY 0.59, NV 0.26
+   epop pre2016       wa   0.0     0.521579                            WA 0.52
+   epop pre2016   jm_emp   2.0     0.767778 MN 0.41, NV 0.21, WY 0.10, WA 0.05
+   epop pre2016    jm_pt   0.0     0.652887                   WY 0.40, NV 0.25
+     ur    full       wa   0.0     0.612707                            WA 0.61
+     ur    full   jm_emp   4.0     0.890509                   MT 0.84, WA 0.05
+     ur    full    jm_pt   2.0     0.729387                   WY 0.71, NV 0.02
+     ur pre2020       wa   0.0     0.472828                            WA 0.47
+     ur pre2020   jm_emp   2.0     0.758799                   MT 0.68, UT 0.08
+     ur pre2020    jm_pt   2.0     0.550271                            WY 0.55
+     ur pre2016       wa   0.0     0.420991                            WA 0.42
+     ur pre2016   jm_emp   1.0     0.719480                   MT 0.64, UT 0.08
+     ur pre2016    jm_pt   2.0     0.505506                            WY 0.51
+   lfpr    full       wa   0.0     1.275630                            WA 1.28
+   lfpr    full   jm_emp   1.0     1.203376 NV 0.52, MN 0.51, WY 0.09, WA 0.08
+   lfpr    full    jm_pt   0.0     0.953745                   NV 0.50, WY 0.45
+   lfpr pre2020       wa   0.0     1.012077                            WA 1.01
+   lfpr pre2020   jm_emp   2.0     1.320894 MN 0.50, NV 0.46, WY 0.27, WA 0.09
+   lfpr pre2020    jm_pt   1.0     1.118394                   WY 0.70, NV 0.42
+   lfpr pre2016       wa   0.0     0.689895                            WA 0.69
+   lfpr pre2016   jm_emp   1.0     1.094650          MN 0.48, NV 0.46, WA 0.16
+   lfpr pre2016    jm_pt   1.0     0.873892                   WY 0.45, NV 0.43
+nonfarm    full       wa   0.0     0.601420                            WA 0.60
+nonfarm    full   jm_emp   2.0     0.860121                   WY 0.70, MN 0.16
+nonfarm    full    jm_pt   0.0     0.784401                   WY 0.76, NV 0.03
+nonfarm pre2020       wa   0.0     0.771000                            WA 0.77
+nonfarm pre2020   jm_emp   2.0     0.903006                   WY 0.72, MN 0.19
+nonfarm pre2020    jm_pt   0.0     0.792291                   WY 0.73, NV 0.06
+nonfarm pre2016       wa   0.0     0.959884                            WA 0.96
+nonfarm pre2016   jm_emp   3.0     0.901944 WY 0.64, MN 0.22, UT 0.04, WA 0.01
+nonfarm pre2016    jm_pt   0.0     0.790602                   WY 0.72, NV 0.07
+ retail    full       wa   0.0     0.821658                            WA 0.82
+ retail    full   jm_emp   0.0     0.962320          WY 0.42, MN 0.35, NV 0.19
+ retail    full    jm_pt   0.0     0.895247                   WY 0.72, NV 0.17
+ retail pre2020       wa   0.0     0.940526                            WA 0.94
+ retail pre2020   jm_emp   2.0     0.887720          MT 0.50, WY 0.25, NV 0.14
+ retail pre2020    jm_pt   0.0     0.724088                   WY 0.45, NV 0.27
+ retail pre2016       wa   0.0     1.069732                            WA 1.07
+ retail pre2016   jm_emp   2.0     0.711966          MT 0.31, UT 0.30, NV 0.10
+ retail pre2016    jm_pt   0.0     0.578849                   NV 0.32, WY 0.25
+leisure    full       wa   0.0     0.961056                            WA 0.96
+leisure    full   jm_emp   0.0     1.246721          MN 0.58, WY 0.39, NV 0.27
+leisure    full    jm_pt   0.0     1.104141                   NV 0.56, WY 0.54
+leisure pre2020       wa   0.0     1.032851                            WA 1.03
+leisure pre2020   jm_emp   1.0     1.236416 MN 0.62, WY 0.33, NV 0.24, UT 0.05
+leisure pre2020    jm_pt   0.0     1.187015                   WY 0.78, NV 0.41
+leisure pre2016       wa   0.0     1.238605                            WA 1.24
+leisure pre2016   jm_emp   0.0     1.236737                   MN 0.92, UT 0.32
+leisure pre2016    jm_pt   0.0     1.172923                   WY 0.76, NV 0.42
+
+written to C:\Users\raimondo\Dropbox\Control VAR\cvar_replication\applications\..\results\alaska

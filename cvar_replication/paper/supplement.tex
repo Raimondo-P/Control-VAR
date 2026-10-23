@@ -1,0 +1,847 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amssymb,amsmath,amsthm,amsfonts,geometry,graphicx,caption,natbib,booktabs,xcolor,bm,float,array}
+\usepackage{lmodern}
+\usepackage{xr-hyper}
+\usepackage{adjustbox,etoolbox}
+\usepackage[section]{placeins}
+% a table wider than the text is scaled down to the text width; narrower tables are unchanged
+\BeforeBeginEnvironment{tabular}{\begin{adjustbox}{max width=\textwidth}}
+\AfterEndEnvironment{tabular}{\end{adjustbox}}
+\usepackage[colorlinks=true,linkcolor=cyan,urlcolor=cyan,citecolor=cyan,hypertexnames=false]{hyperref}
+\externaldocument{main}
+% Exhibits are read from the results folders of the two packages and from figures/.
+\makeatletter
+\def\input@path{{figures/}{../results/paper/}{../simulations/results/mc_diff/}{../simulations/results/tex/}{../simulations/results/tables_11_14/}{../simulations/results/figures/}}
+\makeatother
+\graphicspath{{figures/}{../results/paper/}{../simulations/results/figures/}}
+\geometry{left=1.25in,right=1.25in,top=1.25in,bottom=1.25in}
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lem}{Lemma}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{assumptionb}{Assumption}\renewcommand{\theassumptionb}{3$'$}
+\newtheorem{assumptionc}{Assumption}\renewcommand{\theassumptionc}{4$'$}
+
+\newcommand{\todo}[1]{{\color{red}[\textbf{TODO:} #1]}}
+\newcommand{\safegraphic}[2][]{\IfFileExists{#2}{\includegraphics[#1]{#2}}{\fbox{\todo{figure file \detokenize{#2} missing}}}}
+\newcommand{\safeinput}[1]{\IfFileExists{#1}{\input{#1}}{\fbox{\todo{table file \detokenize{#1} missing}}}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cov}{\operatorname{Cov}}
+\newcommand{\var}{\operatorname{Var}}
+
+% Bibliography keys used in this draft that may be missing from bibliography.bib: Boswijk1994, Johansen1991, Berk1974, PhillipsSolo1992, Phillips1987, Park2002, MullerElliott2003, NgPerron2001, PhillipsOuliaris1990, Shin1994, PerronRodriguez2016, Pesavento2004, ElliottJanssonPesavento2005, ElliottPesavento2009, ERS1996, HarveyThiele2021, ChangPark2003, Park2003, RambachanRoth2023, Manski2013, AronowSamii2017, Leung2020, VazquezBare2023, DelgadoFlorax2015, Clarke2017, CaoDowd2019, Butts2021, Anselin1988, LeSagePace2009, Robins1986, Murphy2003, Nakamura2018a, bojinovshephard2019, mckay2023can,
+% Sims1980, ChristianoEichenbaumEvans1999, Bloom2009, GrangerNewbold1974, EngleGranger1987, Johansen1991,
+% Rubin1980, AngristJordaKuersteiner2018, KilianLutkepohl2017, Arkhangelsky2021, HsiaoChingWan2012,
+% Brodersen2015, CarvalhoMasiniMedeiros2018, MasiniMedeiros2021, deChaisemartinDHaultfoeuille2020,
+% AbadieLHour2021, Saikkonen1991, StockWatson1993, SimsStockWatson1990, Phillips1988, Andrews1993,
+% Andrews1999, LewisReinsel1985, InoueKilian2002, PlagborgMollerWolf2021, LiPlagborgMollerWolf2024,
+% MacKinnon2010, Kwiatkowski1992, BooneEtAl2021, ChodorowReichEtAl2019, Rothstein2011, FarberValletta2015,
+% LjungBox1978, AznarSalvador2002, ChengPhillips2009, Stock1987, Herrndorf1984, KnittelMeiselmanStock2017, KleinmanCenter2024, CARB2024,
+% (add a reference for consistent cointegration rank selection).
+
+\renewcommand{\thesection}{S.\arabic{section}}
+\renewcommand{\thetable}{S.\arabic{table}}
+\renewcommand{\thefigure}{S.\arabic{figure}}
+\renewcommand{\theequation}{S.\arabic{equation}}
+\renewcommand{\thethm}{S.\arabic{thm}}
+\renewcommand{\theprop}{S.\arabic{prop}}
+\renewcommand{\thelem}{S.\arabic{lem}}
+\renewcommand{\theassumption}{S.\arabic{assumption}}
+
+\title{Supplementary Appendix to\\ ``Control VAR: a counterfactual based approach to inference in macroeconomics''}
+\author{Raimondo Pala}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+This supplement has three parts. Sections \ref{sec:identification} to \ref{sec:spillnl} give further theory: what a VAR without controls identifies, which completes Section \ref{sec:var} (Section \ref{sec:identification}); conditioning on the common shock as an alternative to differencing (Section \ref{sec:proxy}); three results on the inference of Section \ref{sec:estimation} (Section \ref{sec:supp-inf}); the assumption, the bootstrap and an extension of the test of Section \ref{sec:test} (Section \ref{sec:supp-testboot}); and the extensions to spillovers and to effects that are not linear in the policy (Section \ref{sec:spillnl}). Section \ref{sec:montecarlo} reports the Monte Carlo simulations, and Section \ref{sec:screen} applies the test of the design to the states of the United States. Sections \ref{sec:app-eb} to \ref{sec:lcfs} complete the applications: further results for Alaska, and the full applications to extended benefits and to the Low Carbon Fuel Standard that the paper summarises. Each section introduces the notation it needs. References to sections, equations, assumptions and results without the prefix S are to the paper.
+
+\section{What a VAR without controls identifies\label{sec:identification}}
+
+This section characterises the impact coefficient of a recursive VAR for a dummy, a continuous and a non-negative policy, with an outcome $V_t$ that may be the treated outcome or the cycle $G_t$ of Section \ref{sec:causal}. The notation is local to this section: $\theta_t(w)$ below is a conditional effect given the past, not the estimand of Section \ref{sec:causal}.
+
+Consider a policy $W_t$ and an outcome of interest $V_t$ observed for $t=1,\dots,T$. In a VAR without controls the outcome is a variable such as consumer prices, and in the CVAR of Section \ref{sec:theorems} it is the gap between a treated unit and its weighted controls. Every period the policy is assigned, the outcome is observed, and a potential outcome process describes the outcome under each assignment path \citep{RambachanSheppard2021}. A dynamic causal effect is the difference between two such paths at a point in time, and only one path is observed.
+
+Let $\mathcal{F}_{t-1}$ be the observed past. The potential outcome $V_t(w)$ is the outcome at $t$ if the policy at $t$ were set to $w$ and the past were as observed. At horizon $h$, $V_{t+h}(w)$ is the outcome at $t+h$ if the policy at $t$ were set to $w$ and the policy after $t$ followed its own, possibly reacting, process. This is the object an impulse response estimates. The direct effect of the policy, which holds the future policy path fixed, is a different object, and Appendix \ref{sec:montecarlo} shows that the two differ when the policy reacts to outcomes.
+
+For a dummy policy, the average treatment effect and the average treatment effect on the treated given the past are
+\begin{equation}
+\mathrm{ATE}_t=\E[V_t(1)-V_t(0)\mid\mathcal{F}_{t-1}],\qquad \mathrm{ATT}_t=\E[V_t(1)-V_t(0)\mid W_t=1,\mathcal{F}_{t-1}].
+\label{eq:ate-att}
+\end{equation}
+They differ by a selection term, the difference between treated and untreated periods in the outcome that would have been observed without the policy. For a continuous policy, let
+\begin{equation}
+\beta_t(w)=\E[V_t(w)-V_t(0)\mid\mathcal{F}_{t-1}],\qquad \theta_t(w)=\E[V_t(w)-V_t(0)\mid W_t=w,\mathcal{F}_{t-1}].
+\label{eq:beta-theta}
+\end{equation}
+The average causal response (ACR) is the derivative $\beta_t'(w)$ \citep{AngristImbensACR1995}. Its conditional counterpart, the average causal response on the treated (ACRT), is the derivative of the effect with respect to the dose among the periods in which that dose is received,
+\begin{equation}
+\mathrm{ACRT}_t(w)=\partial_l\,\E[V_t(l)-V_t(0)\mid W_t=w,\mathcal{F}_{t-1}]\big|_{l=w}.
+\label{eq:acrt}
+\end{equation}
+Defining the effects given the past is what allows non-stationary outcomes to be handled without filtering, and it means that what a VAR identifies is a weighted average of these effects over the possible pasts.
+
+
+
+Let $Z_t$ be a stationary vector, in differences if the variables are non-stationary, that contains the policy $W_t$ first and the outcome $V_t$. The VAR($p$) is $Z_t=c+\sum_{l=1}^pA_lZ_{t-l}+\epsilon_t$, with residual covariance $\Sigma$. A Cholesky decomposition with the policy first, normalised so that the policy has unit impact, gives the response of the outcome to a unit policy innovation. Its impact is $\gamma=\Sigma_{VW}/\Sigma_{WW}$, and the response at horizon $h$ propagates it through the coefficients $A_l$.
+
+Let $\nu_t=\E[W_t\mid\mathcal{F}_{t-1}]$ and $u_t=W_t-\nu_t$ be the predictable part and the innovation of the policy, and let
+\begin{equation}
+\begin{aligned}
+\mu_t(w)&=\E[V_t\mid W_t=w,\mathcal{F}_{t-1}],\qquad m_t=\E[V_t(0)\mid\mathcal{F}_{t-1}],\\
+\omega_t(w)&=\E\big[(W_t-\nu_t)\mathbf{1}\{W_t\geq w\}\mid\mathcal{F}_{t-1}\big].
+\end{aligned}
+\label{eq:objects}
+\end{equation}
+The weights $\omega_t$ are non-negative and integrate to $\var(W_t\mid\mathcal{F}_{t-1})$. Let $\mu_t^\ast$ equal $\mu_t$ on the support of $W_t$ given the past and be linear across the gaps of that support. For a dummy policy, $\mu_t^\ast$ is the line between $\mu_t(0)$ and $\mu_t(1)$ and $\omega_t=p_t(1-p_t)$, with $p_t=\mathbb{P}(W_t=1\mid\mathcal{F}_{t-1})$.
+
+\begin{assumption}[Consistency and no anticipation\label{assu:C1}]
+$V_t=V_t(W_t)$, and the potential outcome at $t$ depends on the policy only up to $t$.
+\end{assumption}
+
+\begin{assumption}[Policy equation\label{assu:C3}]
+$\E[W_t\mid\mathcal{F}_{t-1}]=c+\sum_{l=1}^pa_l'Z_{t-l}$, $Z_t$ is covariance stationary with finite second moments, and $\E[\var(W_t\mid\mathcal{F}_{t-1})]>0$.
+\end{assumption}
+
+\begin{assumption}[Baseline independence given the past\label{assu:C2}]
+$\E[V_t(0)\mid W_t,\mathcal{F}_{t-1}]=\E[V_t(0)\mid\mathcal{F}_{t-1}]=m_t$ almost surely.
+\end{assumption}
+
+\begin{assumption}[Strong parallel trends\label{assu:C5}]
+$\E[V_t(w)-V_t(0)\mid W_t,\mathcal{F}_{t-1}]=\beta_t(w)$ for all $w$.
+\end{assumption}
+
+Assumption \ref{assu:C1} is the consistency condition of the Rubin causal model adapted to time series, and it rules out anticipation. Assumption \ref{assu:C3} says that the lags of the system span the predictable part of the policy. Assumption \ref{assu:C2} says that, given the past, the policy innovation is unrelated to the outcome the economy would have had without the policy. It is the conditional counterpart of the independence condition of \citet{RambachanSheppard2021}, and it fails when the policy reacts to the contemporaneous state of the economy, as a monetary policy that follows a Taylor rule does. Assumption \ref{assu:C5} is the strong parallel trends condition of \citet{callawaysantannabacon2021}. It rules out that the effect of a dose is systematically related to the dose that was received. It does not restrict the shape of the dose-response, which may be non-linear.
+
+The assumptions are stated on the observed outcome given the observed past, not on the residuals of the VAR. The following lemma shows that nothing is lost by doing so.
+
+\begin{lem}[From residuals to outcomes\label{lem:outcome}]
+Under Assumption \ref{assu:C3},
+\begin{equation}
+\gamma=\frac{\Sigma_{VW}}{\Sigma_{WW}}=\frac{\E[V_tu_t]}{\E[u_t^2]}=\frac{\E[\cov(V_t,W_t\mid\mathcal{F}_{t-1})]}{\E[\var(W_t\mid\mathcal{F}_{t-1})]}.
+\label{eq:gamma-bridge}
+\end{equation}
+The first column of the Cholesky factor is therefore the coefficient of a regression of the outcome on the policy innovation, and it does not depend on the specification of the equation of the outcome. At horizon $h$, the second and third expressions hold with $V_{t+h}$ in place of $V_t$, and they equal the response of the VAR when the VAR is the linear projection representation of $Z_t$, as a VAR of infinite order is \citep{PlagborgMollerWolf2021}.
+\end{lem}
+
+If Assumption \ref{assu:C3} fails, the coefficient contains the additional term
+\[
+\Delta_{AR}=\frac{\cov(m_t,u_t^W)}{\var(u_t^W)},
+\]
+where $u_t^W$ is the residual of the policy equation. It vanishes if the policy equation is correct and also if $m_t$ is linear in the same lags (proof of Lemma \ref{lem:outcome}).
+
+\begin{thm}[Decomposition of the VAR coefficient\label{thm:weights}]
+Under Assumption \ref{assu:C3}, if $\mu_t^\ast$ is absolutely continuous and $\E\int|\mu_t^{\ast\prime}(w)|\omega_t(w)\,dw<\infty$, then
+\begin{equation}
+\gamma=\frac{\E\left[\int\mu_t^{\ast\prime}(w)\,\omega_t(w)\,dw\right]}{\E\left[\int\omega_t(w)\,dw\right]},
+\label{eq:weights}
+\end{equation}
+a weighted average, with non-negative weights that integrate to one, of the slope of the conditional mean of the outcome given the policy and the past. No causal assumption is used.
+\end{thm}
+
+\begin{thm}[Dummy policy\label{thm:dummy}]
+Let $W_t\in\{0,1\}$.
+\begin{enumerate}
+\item[(a)] Under Assumptions \ref{assu:C1} and \ref{assu:C3},
+\begin{equation}
+\begin{aligned}
+\gamma&=\frac{\E[p_t(1-p_t)\,(\mathrm{ATT}_t+\Delta_t^S)]}{\E[p_t(1-p_t)]},\\
+\Delta_t^S&=\E[V_t(0)\mid W_t=1,\mathcal{F}_{t-1}]-\E[V_t(0)\mid W_t=0,\mathcal{F}_{t-1}],
+\end{aligned}
+\label{eq:dummy-a}
+\end{equation}
+where $\Delta_t^S$ is the selection bias.
+\item[(b)] If Assumption \ref{assu:C2} also holds, $\Delta_t^S=0$ and $\gamma=\E[p_t(1-p_t)\,\mathrm{ATT}_t]/\E[p_t(1-p_t)]$, a weighted average of the effect on the treated given the past. If Assumption \ref{assu:C5} holds as well, $\mathrm{ATT}_t=\mathrm{ATE}_t$ and $\gamma$ is the same weighted average of the average treatment effect.
+\end{enumerate}
+\end{thm}
+
+The weights favour the periods in which the policy is least predictable from the past. If the effect does not depend on the past, $\gamma$ is the ATT, and the ATE under strong parallel trends.
+
+\begin{thm}[Continuous policy\label{thm:continuous}]
+Let the policy be continuously distributed given the past, with $\mu_t$ absolutely continuous and the integrability condition of Theorem \ref{thm:weights}.
+\begin{enumerate}
+\item[(a)] Under Assumptions \ref{assu:C1} and \ref{assu:C3},
+\begin{equation}
+\gamma=\frac{\E\left[\int\big(\mathrm{ACRT}_t(w)+S_t(w)+B_t'(w)\big)\,\omega_t(w)\,dw\right]}{\E\left[\int\omega_t(w)\,dw\right]},
+\label{eq:cont-a}
+\end{equation}
+where $S_t(w)=\partial_{w'}\E[V_t(w)-V_t(0)\mid W_t=w',\mathcal{F}_{t-1}]|_{w'=w}$ is the selection on the effect and $B_t(w)=\E[V_t(0)\mid W_t=w,\mathcal{F}_{t-1}]$ is the baseline outcome of the periods that receive dose $w$, whose slope is the selection on the baseline, both assumed differentiable.
+\item[(b)] If Assumptions \ref{assu:C2} and \ref{assu:C5} also hold, $B_t'\equiv0$, $S_t\equiv0$, $\mathrm{ACRT}_t=\beta_t'$, and $\gamma$ is the weighted average of the ACR, $\gamma=\E[\int\beta_t'\omega_t]/\E[\int\omega_t]$. If $W_t\mid\mathcal{F}_{t-1}\sim\mathcal{N}(\nu_t,\sigma_t^2)$ the weights are $\omega_t(w)=\sigma_t^2\phi(w;\nu_t,\sigma_t^2)$, but normality is not needed.
+\end{enumerate}
+\end{thm}
+
+The third case is a non-negative policy, such as an outage measured in megawatts. The support of $W_t$ given the past is $\{0\}\cup[d_L,d_U]$, with $d_L>0$ the smallest positive dose, and $\mathbb{P}(W_t=0\mid\mathcal{F}_{t-1})>0$ (Assumption \ref{assu:nonneg}).
+
+\begin{assumption}[Non-negative policy\label{assu:nonneg}]
+$W_t\geq0$, $\mathbb{P}(W_t=0\mid\mathcal{F}_{t-1})>0$, and the support of $W_t$ given the past is $\{0\}\cup[d_L,d_U]$.
+\end{assumption}
+
+\begin{thm}[Non-negative policy\label{thm:nonneg}]
+Let Assumptions \ref{assu:C1}, \ref{assu:C3} and \ref{assu:nonneg} hold, with $\mu_t$ absolutely continuous on $[d_L,d_U]$ and the integrability condition of Theorem \ref{thm:weights}.
+\begin{enumerate}
+\item[(a)] The coefficient is
+\begin{equation}
+\begin{aligned}
+\gamma&=\frac{\E\left[q_{0,t}\dfrac{\mu_t(d_L)-\mu_t(0)}{d_L}+\displaystyle\int_{d_L}^{d_U}\mu_t'(w)\,\omega_t(w)\,dw\right]}{\E[\var(W_t\mid\mathcal{F}_{t-1})]},\\
+q_{0,t}&=d_L\,\nu_t\,\mathbb{P}(W_t=0\mid\mathcal{F}_{t-1}).
+\end{aligned}
+\label{eq:nonneg-a}
+\end{equation}
+\item[(b)] If Assumptions \ref{assu:C2} and \ref{assu:C5} also hold, the first component is the average treatment effect of the smallest dose against no policy per unit of dose, $\mathrm{ATE}_t(d_L,0)/d_L$, and the second is the ACR.
+\end{enumerate}
+\end{thm}
+
+The coefficient is a mixture of an extensive margin and the marginal effects of the dose. The weights are known, but the two components answer different questions, and a researcher interested in one of them needs a design that separates them, for instance a dummy for the extensive margin.
+
+\paragraph{Proof of Lemma \ref{lem:outcome}.} Step 1 (the residual of the outcome equation). Let $\Pi_V$ be the linear projection of $V_t$ on $1,Z_{t-1},\dots,Z_{t-p}$ and $u_t^V=V_t-\Pi_V$, so that $\Sigma_{VW}=\E[u_t^Vu_t^W]$. Under Assumption \ref{assu:C3}, the residual of the policy equation is the innovation, $u_t^W=W_t-\nu_t=u_t$. The projection $\Pi_V$ is $\mathcal{F}_{t-1}$-measurable and $\E[u_t\mid\mathcal{F}_{t-1}]=0$, so $\E[\Pi_Vu_t]=0$ and
+\[
+\Sigma_{VW}=\E[V_tu_t],\qquad \Sigma_{WW}=\E[u_t^2].
+\]
+
+Step 2 (the conditional form). Since $\nu_t$ is $\mathcal{F}_{t-1}$-measurable, iterated expectations give
+\[
+\begin{aligned}
+\E[V_tu_t]&=\E\big[\E[V_t(W_t-\nu_t)\mid\mathcal{F}_{t-1}]\big]=\E[\cov(V_t,W_t\mid\mathcal{F}_{t-1})],\\
+\E[u_t^2]&=\E[\var(W_t\mid\mathcal{F}_{t-1})],
+\end{aligned}
+\]
+which proves \eqref{eq:gamma-bridge}.
+
+Step 3 (horizon $h$). The argument of Step 2 applies to $\E[V_{t+h}u_t]$ unchanged. The response of the VAR at horizon $h$ to a unit policy innovation is the coefficient on $u_t$ in the linear projection of $V_{t+h}$ on $u_t$ and the past when the VAR is the projection representation of $Z_t$, and that coefficient is $\E[V_{t+h}u_t]/\E[u_t^2]$ because $u_t$ is orthogonal to the past \citep{PlagborgMollerWolf2021}.
+
+Step 4 (a misspecified policy equation). If Assumption \ref{assu:C3} fails, $u_t^W$ is the linear projection error of the policy, which has mean zero and is orthogonal to the lags but is not a martingale difference, and Step 1 gives $\gamma=\E[V_tu_t^W]/\E[(u_t^W)^2]$. Under Assumption \ref{assu:C2}, $\E[V_t\mid W_t,\mathcal{F}_{t-1}]=m_t+\theta_t(W_t)$, so
+\[
+\E[V_tu_t^W]=\E[\theta_t(W_t)\,u_t^W]+\cov(m_t,u_t^W),
+\]
+which gives the additional term $\Delta_{AR}=\cov(m_t,u_t^W)/\var(u_t^W)$. It is zero if $m_t$ is linear in the lags, because $u_t^W$ is orthogonal to them. $\square$
+
+\paragraph{Proof of Theorem \ref{thm:weights}.} Step 1 (a covariance identity). Let $X$ be a random variable with $\E|X|<\infty$ and $\varphi$ an absolutely continuous function with $\int|\varphi'(x)|\,\E\big[|X-\E X|\mathbf{1}\{X\geq x\}\big]\,dx<\infty$. Writing $\varphi(X)-\varphi(c)=\int\varphi'(x)\big(\mathbf{1}\{X\geq x\}-\mathbf{1}\{c\geq x\}\big)\,dx$ for a constant $c$, taking the covariance with $X$ and exchanging the order of integration (Fubini),
+\[
+\begin{aligned}
+\cov(\varphi(X),X)&=\int\varphi'(x)\,\cov(\mathbf{1}\{X\geq x\},X)\,dx\\
+&=\int\varphi'(x)\,\E\big[(X-\E X)\mathbf{1}\{X\geq x\}\big]\,dx .
+\end{aligned}
+\]
+No restriction on the distribution of $X$ is needed, so the identity covers discrete and mixed policies \citep{Yitazaki1996}.
+
+Step 2 (the weights). For a variable $W$ with conditional mean $\nu$ and variance $\sigma^2$ given $\mathcal{F}$, let $\omega(w)=\E[(W-\nu)\mathbf{1}\{W\geq w\}\mid\mathcal{F}]$. For $w\geq\nu$, every value of $(W-\nu)\mathbf{1}\{W\geq w\}$ is non-negative. For $w<\nu$, since $\E[W-\nu\mid\mathcal{F}]=0$, $\omega(w)=-\E[(W-\nu)\mathbf{1}\{W<w\}\mid\mathcal{F}]$, and every value of $(W-\nu)\mathbf{1}\{W<w\}$ is non-positive. Hence $\omega\geq0$. Integrating the two pieces and exchanging the order of integration,
+\[
+\int_\nu^\infty\omega(w)\,dw=\E\big[((W-\nu)^+)^2\mid\mathcal{F}\big],\qquad \int_{-\infty}^\nu\omega(w)\,dw=\E\big[((W-\nu)^-)^2\mid\mathcal{F}\big],
+\]
+which sum to $\sigma^2$.
+
+Step 3 (the coefficient). By Lemma \ref{lem:outcome}, $\gamma=\E[\cov(V_t,W_t\mid\mathcal{F}_{t-1})]/\E[\var(W_t\mid\mathcal{F}_{t-1})]$. Given $\mathcal{F}_{t-1}$, $\cov(V_t,W_t\mid\mathcal{F}_{t-1})=\cov(\mu_t^\ast(W_t),W_t\mid\mathcal{F}_{t-1})$, because $\E[V_t\mid W_t,\mathcal{F}_{t-1}]=\mu_t(W_t)$ and $W_t$ lies in the support, where $\mu_t^\ast=\mu_t$. Step 1, applied conditionally on $\mathcal{F}_{t-1}$ with $\varphi=\mu_t^\ast$, gives the numerator $\E[\int\mu_t^{\ast\prime}(w)\,\omega_t(w)\,dw]$, and Step 2 gives the denominator. The integrability condition of the theorem justifies the exchanges of integration and expectation. $\square$
+
+\paragraph{Proof of Theorem \ref{thm:dummy}.} Step 1 (the weights). For $W_t\in\{0,1\}$, $\nu_t=p_t$, and for $w\in(0,1]$, $\omega_t(w)=\E[(W_t-p_t)\mathbf{1}\{W_t=1\}\mid\mathcal{F}_{t-1}]=p_t(1-p_t)$, while $\omega_t(w)=0$ outside $[0,1]$. The function $\mu_t^\ast$ is the line between $\mu_t(0)$ and $\mu_t(1)$, so Theorem \ref{thm:weights} gives
+\[
+\gamma=\frac{\E[p_t(1-p_t)\,(\mu_t(1)-\mu_t(0))]}{\E[p_t(1-p_t)]} .
+\]
+
+Step 2 (the contrast). By Assumption \ref{assu:C1},
+\[
+\begin{aligned}
+\mu_t(1)&=\E[V_t(1)\mid W_t=1,\mathcal{F}_{t-1}]=\mathrm{ATT}_t+\E[V_t(0)\mid W_t=1,\mathcal{F}_{t-1}],\\
+\mu_t(0)&=\E[V_t(0)\mid W_t=0,\mathcal{F}_{t-1}],
+\end{aligned}
+\]
+so $\mu_t(1)-\mu_t(0)=\mathrm{ATT}_t+\Delta_t^S$, which is (a).
+
+Step 3 (part (b)). Under Assumption \ref{assu:C2}, both conditional means of $V_t(0)$ equal $m_t$, so $\Delta_t^S=0$. Under Assumption \ref{assu:C5}, $\mathrm{ATT}_t=\beta_t(1)=\mathrm{ATE}_t$. $\square$
+
+\paragraph{Proof of Theorem \ref{thm:continuous}.} Step 1 (the conditional mean). By Assumption \ref{assu:C1}, $V_t=V_t(W_t)$, so
+\[
+\mu_t(w)=\E[V_t(w)\mid W_t=w,\mathcal{F}_{t-1}]=B_t(w)+\theta_t(w),
+\]
+with $B_t(w)=\E[V_t(0)\mid W_t=w,\mathcal{F}_{t-1}]$ and $\theta_t$ as in \eqref{eq:beta-theta}.
+
+Step 2 (the slope of the effect). Let $g_t(l,w')=\E[V_t(l)-V_t(0)\mid W_t=w',\mathcal{F}_{t-1}]$, so that $\theta_t(w)=g_t(w,w)$. By the chain rule along $l=w'=w$,
+\[
+\theta_t'(w)=\partial_lg_t(l,w)\big|_{l=w}+\partial_{w'}g_t(w,w')\big|_{w'=w}=\mathrm{ACRT}_t(w)+S_t(w).
+\]
+
+Step 3 (part (a)). By Steps 1 and 2, $\mu_t'(w)=\mathrm{ACRT}_t(w)+S_t(w)+B_t'(w)$. The policy is continuously distributed given the past, so $\mu_t^\ast=\mu_t$, and Theorem \ref{thm:weights} gives \eqref{eq:cont-a}.
+
+Step 4 (part (b)). Under Assumption \ref{assu:C2}, $B_t(w)=m_t$ for every $w$, so $B_t'\equiv0$. Under Assumption \ref{assu:C5}, $g_t(l,w')=\beta_t(l)$ does not depend on $w'$, so $S_t\equiv0$ and $\mathrm{ACRT}_t=\beta_t'$. The decomposition of the slope into the effect on the treated and selection terms is the continuous-dose decomposition of \citet{callawaysantannabacon2021}.
+
+Step 5 (the Gaussian case). If $W_t\mid\mathcal{F}_{t-1}\sim\mathcal{N}(\nu_t,\sigma_t^2)$, then $\omega_t(w)=\int_w^\infty(x-\nu_t)\,\phi(x;\nu_t,\sigma_t^2)\,dx=\sigma_t^2\,\phi(w;\nu_t,\sigma_t^2)$, because $(x-\nu_t)\phi(x;\nu_t,\sigma_t^2)=-\sigma_t^2\,\partial_x\phi(x;\nu_t,\sigma_t^2)$. $\square$
+
+\paragraph{Proof of Theorem \ref{thm:nonneg}.} Step 1 (the extended conditional mean). The support of $W_t$ given the past is $\{0\}\cup[d_L,d_U]$, so $\mu_t^\ast$ equals $\mu_t$ on $[d_L,d_U]$ and is the line between $(0,\mu_t(0))$ and $(d_L,\mu_t(d_L))$ on the gap $(0,d_L)$, with slope $(\mu_t(d_L)-\mu_t(0))/d_L$.
+
+Step 2 (the weights). For $w<0$, $\mathbf{1}\{W_t\geq w\}=1$ and $\omega_t(w)=\E[W_t-\nu_t\mid\mathcal{F}_{t-1}]=0$, so no weight falls below zero. On the gap, $\mathbf{1}\{W_t\geq w\}=\mathbf{1}\{W_t>0\}$, so $\omega_t$ is constant there, and since $\E[W_t-\nu_t\mid\mathcal{F}_{t-1}]=0$,
+\[
+\begin{aligned}
+\omega_t(w)&=\E[(W_t-\nu_t)\mathbf{1}\{W_t>0\}\mid\mathcal{F}_{t-1}]=-\E[(W_t-\nu_t)\mathbf{1}\{W_t=0\}\mid\mathcal{F}_{t-1}]\\
+&=\nu_t\,\mathbb{P}(W_t=0\mid\mathcal{F}_{t-1}),\qquad 0<w<d_L .
+\end{aligned}
+\]
+
+Step 3 (part (a)). By Theorem \ref{thm:weights}, the numerator is the integral of $\mu_t^{\ast\prime}\omega_t$ over the gap plus that over $[d_L,d_U]$. The first is the constant slope of Step 1 times the constant weight of Step 2 times the length $d_L$ of the gap,
+\[
+d_L\,\nu_t\,\mathbb{P}(W_t=0\mid\mathcal{F}_{t-1})\cdot\frac{\mu_t(d_L)-\mu_t(0)}{d_L}=q_{0,t}\,\frac{\mu_t(d_L)-\mu_t(0)}{d_L},
+\]
+and the second is $\int_{d_L}^{d_U}\mu_t'(w)\,\omega_t(w)\,dw$, which gives \eqref{eq:nonneg-a}.
+
+Step 4 (part (b)). Under Assumptions \ref{assu:C1}, \ref{assu:C2} and \ref{assu:C5}, $\mu_t(d_L)-\mu_t(0)=\big(m_t+\beta_t(d_L)\big)-m_t=\mathrm{ATE}_t(d_L,0)$, and on $[d_L,d_U]$ Step 4 of the proof of Theorem \ref{thm:continuous} gives $\mu_t'=\beta_t'$. $\square$
+
+
+\section{Conditioning on the common shock\label{sec:proxy}}
+
+The CVAR cancels the common shock by differencing, which requires the two units to load on it in the same ratio at impact. An alternative estimates the contemporaneous loading from the data. The VAR is estimated on the policy, the treated outcome and the controls, with the controls ordered first, so that the policy innovation is purged of the part that is correlated with the contemporaneous innovations of the controls. The identifying condition is then independence of the policy innovation from the treated unit's own innovation given the common shock, which is weaker than Assumption \ref{assu:C2} for the outcome. Let $e^W_t$, $e^1_t$, $e^{P_1}_t$ and $e^{P_2}_t$ be the innovations of the policy, of the treated outcome and of two proxies for the common shock, each a control or an average of controls.
+
+\begin{assumption}[Common-shock representation\label{assu:P}]
+There are mutually uncorrelated shocks $\eta_t$, $\omega_t$, $v_t$, $a_{1t}$, $a_{2t}$, with $\sigma_\eta^2>0$ and $\sigma_\omega^2>0$, and constants $\lambda$, $\beta$, $\theta$ and $\ell_2\neq0$, such that
+\begin{equation}
+e^W_t=\lambda\eta_t+\omega_t,\qquad e^1_t=\beta\eta_t+v_t+\theta\,e^W_t,\qquad e^{P_1}_t=\eta_t+a_{1t},\qquad e^{P_2}_t=\ell_2\eta_t+a_{2t}.
+\label{eq:common-shock}
+\end{equation}
+The policy does not react to the treated unit's own shock $v_t$ or to the proxy noises, and the controls do not respond to the policy.
+\end{assumption}
+
+Here $\eta_t$ is the common shock, with the scale chosen so that the first proxy loads on it with coefficient one, $v_t$ is the shock specific to the treated unit, and $a_{jt}$ is the idiosyncratic innovation of proxy $j$. The parameter $\theta$ is the response of the treated outcome to a unit policy innovation.
+
+\begin{thm}[Conditioning on the common shock\label{thm:proxy}]
+Under Assumption \ref{assu:P}:
+\begin{enumerate}
+\item[(a)] The coefficient on $e^W_t$ in the regression of $e^1_t$ on $e^W_t$ and $e^{P_1}_t$ converges to
+\begin{equation}
+\theta+\frac{\beta\lambda\kappa}{\sigma_\omega^2+\lambda^2\kappa},\qquad \kappa=\frac{\sigma_\eta^2\sigma_{a_1}^2}{\sigma_\eta^2+\sigma_{a_1}^2}.
+\label{eq:proxy-bias}
+\end{equation}
+The bias is zero only if $\beta\lambda=0$ or $\sigma_{a_1}^2=0$. If the proxy is the average of $K$ controls with equal loadings and uncorrelated idiosyncratic innovations of variance $\sigma_a^2$, then $\sigma_{a_1}^2=\sigma_a^2/K$ and the bias is $O(1/K)$.
+\item[(b)] Two-stage least squares of $e^1_t$ on $e^W_t$ and $e^{P_1}_t$, with $e^W_t$ and $e^{P_2}_t$ as instruments, is consistent for $\theta$.
+\item[(c)] The response of the treated outcome at horizon $h$ to a unit policy innovation is the second element of $\Psi_h\,b$, where $\Psi_h$ are the moving-average coefficients of the VAR and $b=(1,\theta,0,0)'$ is the impact vector. It is consistent when $\theta$ and the VAR coefficients are.
+\end{enumerate}
+\end{thm}
+
+Part (a) is the errors-in-variables bias of conditioning on one noisy control. Part (b) uses one control as an instrument for the other, which requires their idiosyncratic innovations to be uncorrelated, and fails for controls that share regional shocks. The estimator runs a VAR on the policy, the treated outcome and the two proxies, takes the residuals, computes the two-stage least squares coefficient and propagates $b$ through the VAR. Standard errors come from the residual bootstrap applied to the whole procedure.
+
+\paragraph{Proof of Theorem \ref{thm:proxy}.} Write $S=\sigma_\eta^2+\sigma_{a_1}^2$ and $\kappa=\sigma_\eta^2\sigma_{a_1}^2/S$.
+
+Step 1 (part (a): the regression with one proxy). By the Frisch-Waugh-Lovell theorem, the coefficient on $e^W_t$ in the regression of $e^1_t$ on $e^W_t$ and $e^{P_1}_t$ is $\cov(e^1_t,\tilde e^W_t)/\var(\tilde e^W_t)$, where $\tilde e^W_t$ is the residual of the projection of $e^W_t$ on $e^{P_1}_t$. The projection coefficient is $c=\cov(e^W_t,e^{P_1}_t)/\var(e^{P_1}_t)=\lambda\sigma_\eta^2/S$, so
+\[
+\tilde e^W_t=e^W_t-c\,e^{P_1}_t=(\lambda-c)\,\eta_t+\omega_t-c\,a_{1t},\qquad \lambda-c=\frac{\lambda\sigma_{a_1}^2}{S}.
+\]
+Its variance and its covariance with the common shock are
+\[
+\var(\tilde e^W_t)=(\lambda-c)^2\sigma_\eta^2+\sigma_\omega^2+c^2\sigma_{a_1}^2=\sigma_\omega^2+\lambda^2\kappa,\qquad
+\cov(\eta_t,\tilde e^W_t)=(\lambda-c)\sigma_\eta^2=\lambda\kappa .
+\]
+Since $v_t$ is uncorrelated with $\tilde e^W_t$, and $\cov(e^W_t,\tilde e^W_t)=\var(\tilde e^W_t)$ because $\tilde e^W_t$ is a projection residual of $e^W_t$,
+\[
+\cov(e^1_t,\tilde e^W_t)=\beta\lambda\kappa+\theta\var(\tilde e^W_t).
+\]
+Dividing by $\var(\tilde e^W_t)$ gives \eqref{eq:proxy-bias}. The bias is zero if and only if $\beta\lambda\kappa=0$, and $\kappa=0$ if and only if $\sigma_{a_1}^2=0$. If the proxy is the average of $K$ controls with equal loadings and uncorrelated idiosyncratic innovations of variance $\sigma_a^2$, its noise has variance $\sigma_a^2/K$, and $\kappa\leq\sigma_{a_1}^2=O(1/K)$.
+
+Step 2 (part (b): two proxies). Substituting $\eta_t=e^{P_1}_t-a_{1t}$,
+\[
+e^1_t=\theta\,e^W_t+\beta\,e^{P_1}_t+(v_t-\beta a_{1t}).
+\]
+The error $v_t-\beta a_{1t}$ is uncorrelated with $e^W_t$ and with $e^{P_2}_t$, because the shocks are mutually uncorrelated. The matrix of cross moments of the instruments $(e^W_t,e^{P_2}_t)$ with the regressors $(e^W_t,e^{P_1}_t)$ is
+\[
+\begin{pmatrix}\lambda^2\sigma_\eta^2+\sigma_\omega^2&\lambda\sigma_\eta^2\\ \ell_2\lambda\sigma_\eta^2&\ell_2\sigma_\eta^2\end{pmatrix},
+\]
+with determinant $\ell_2\sigma_\eta^2\sigma_\omega^2\neq0$. The instruments are therefore relevant and exogenous, and two-stage least squares is consistent for $(\theta,\beta)$.
+
+Step 3 (part (c): the dynamic response). Under Assumption \ref{assu:P}, a unit innovation in the policy with the common shock held fixed moves the policy, the treated outcome and the two proxies on impact by $b=(1,\theta,0,0)'$, because the controls do not respond to the policy. The response at horizon $h$ is the second element of $\Psi_hb$, a continuous function of $\theta$ and of the coefficients of the VAR, so it is consistent when they are. $\square$
+
+
+\section{Inference: known weights, the first-step term and the wild bootstrap\label{sec:supp-inf}}
+
+This section gives three results on the inference of Section \ref{sec:estimation}: the validity of the residual bootstrap when the weights on the controls are known, the coefficient with which the error of the weights on the stationary combinations of the controls enters the response, and the failure of the wild bootstrap at impact.
+
+\begin{thm}[Residual bootstrap\label{thm:resid}]
+Let $Z_t$ follow a stationary VAR($p$) with i.i.d. innovations with finite fourth moments and positive definite covariance, and let $\gamma_h$ be the response at a fixed horizon $h$. Then the residual bootstrap distribution of $\sqrt{T}(\gamma_h^\ast-\hat\gamma_h)$ converges to the limit of the distribution of $\sqrt{T}(\hat\gamma_h-\gamma_h)$ in probability, and the percentile band has asymptotic coverage $1-\alpha$.
+\end{thm}
+
+\begin{prop}[The first-step term\label{prop:J}]
+Let the conditions of Theorem \ref{thm:est}(b) hold, and let $\pi_{G,l}$ be the coefficient of $G^\ast_{t-l}$ in the projection of $W_t$ on $R_t$ and $p$ lags of $Z_t$. For any $\delta\in\mathbb{R}^{K-r}$,
+\begin{equation}
+J_h'\delta=\frac{-\E[S_{t+h}u_t]'\delta+\E[G^\ast_{t+h}\dot u_t(\delta)]-2\gamma_h\E[u_t\dot u_t(\delta)]}{\E[u_t^2]},
+\label{eq:J}
+\end{equation}
+where $\dot u_t(\delta)$ is the derivative of the policy innovation with respect to the weights on $S_t$, given in Appendix \ref{sec:proofs-main}. In particular $J_h=0$ for all $h$ if (i) $\pi_{G,l}=0$ for $l=1,\dots,p$ and (ii) $\E[S_{t+j}u_t]=0$ for all $j$.
+\end{prop}
+
+\paragraph{Proof of Theorem \ref{thm:resid}.} Let $n$ be the number of observations used in the VAR, $A$ the matrix of its coefficients, $\Sigma$ the covariance matrix of its innovations, and $\zeta=(\mathrm{vec}(A)',\mathrm{vech}(\Sigma)')'$ the vector of its parameters, with asymptotic covariance $V$. Let $q^\ast_\alpha$ be the $\alpha$ quantile of the bootstrap distribution of $\gamma^\ast_h$, so that the percentile band is $[q^\ast_{\alpha/2},q^\ast_{1-\alpha/2}]$.
+
+Step 1 (the estimator). Under the conditions of the theorem, the least-squares estimator satisfies
+\[
+\sqrt n(\hat\zeta-\zeta)\Rightarrow N(0,V),
+\]
+where $V$ depends on $A$, $\Sigma$ and the fourth moments of the innovations \citep[Chapter 12]{KilianLutkepohl2017}. The response at horizon $h$ is $\gamma_h=g_h(\zeta)$ for a function $g_h$ that is continuously differentiable at $\zeta$, because it is a polynomial in the first $h$ coefficient matrices multiplied by a column of the Cholesky factor of $\Sigma$, normalised by its diagonal element. By the delta method,
+\[
+\sqrt n(\hat\gamma_h-\gamma_h)\Rightarrow N\big(0,\nabla g_h(\zeta)'V\nabla g_h(\zeta)\big).
+\]
+
+Step 2 (the bootstrap estimator). Conditionally on the data, the bootstrap sample is generated by the VAR with coefficients $\hat A$ and innovations drawn with replacement from the centred residuals, whose covariance and fourth moments converge in probability to those of the innovations. The bootstrap central limit theorem for autoregressions \citep{Bose1988,KilianLutkepohl2017} gives
+\[
+\sqrt n(\hat\zeta^\ast-\hat\zeta)\Rightarrow N(0,V)\quad\text{in probability},
+\]
+and the delta method, applied conditionally on the data with $\nabla g_h(\hat\zeta)\to_p\nabla g_h(\zeta)$, gives the same normal limit for $\sqrt n(\gamma_h^\ast-\hat\gamma_h)$ in probability.
+
+Step 3 (coverage). Since the limit in Steps 1 and 2 is continuous, the convergence of the distribution functions is uniform, and
+\[
+\begin{aligned}
+\mathbb P\big(q^\ast_{\alpha/2}\leq\gamma_h\leq q^\ast_{1-\alpha/2}\big)&=\mathbb P\big(\sqrt n(\hat\gamma_h-q^\ast_{1-\alpha/2})\leq\sqrt n(\hat\gamma_h-\gamma_h)\leq\sqrt n(\hat\gamma_h-q^\ast_{\alpha/2})\big)\\
+&\to1-\alpha,
+\end{aligned}
+\]
+because the bootstrap quantiles of $\sqrt n(\gamma^\ast_h-\hat\gamma_h)$ converge to those of the normal limit, and that limit is symmetric about zero. $\square$
+
+\paragraph{Proof of Proposition \ref{prop:J}.} Fix a direction $\delta$ and, for a scalar $\varepsilon$, let $G_t(\varepsilon)=G^\ast_t-\varepsilon\delta'S_t$ be the cycle with the weights on $S_t$ moved by $\varepsilon\delta$. Let $x_t(\varepsilon)$ be the regressors of the policy equation, $R_t$ and $p$ lags of $(R_t',W_t,G_t(\varepsilon))'$, let $\pi(\varepsilon)$ be the coefficients of the population projection of $W_t$ on them and $u_t(\varepsilon)=W_t-x_t(\varepsilon)'\pi(\varepsilon)$ its residual, so that $x_t(0)=x_t$, $\pi(0)=\pi$ and $u_t(0)=u_t$. A dot denotes the derivative at $\varepsilon=0$.
+
+Step 1 (the response as a function of $\varepsilon$). By the second part of the proof of Theorem \ref{thm:cycle},
+\[
+\gamma_h(\varepsilon)=\frac{\E[G_{t+h}(\varepsilon)u_t(\varepsilon)]}{\E[u_t(\varepsilon)^2]},
+\]
+and by Step 3 of the proof of Theorem \ref{thm:est}, $J_h'\delta$ is the derivative of $\gamma_h(\varepsilon)$ at $\varepsilon=0$.
+
+Step 2 (the derivatives of the ingredients). The cycle gives $\dot G_{t+h}=-\delta'S_{t+h}$. The regressors give $\dot x_t$, the vector with $-\delta'S_{t-l}$ in the position of $G^\ast_{t-l}$, $l=1,\dots,p$, and zero elsewhere. The innovation gives
+\[
+\dot u_t=-\dot x_t'\pi-x_t'\dot\pi=\sum_{l=1}^p\pi_{G,l}\,\delta'S_{t-l}-x_t'\dot\pi ,
+\]
+since the only non-zero elements of $\dot x_t$ multiply the coefficients $\pi_{G,l}$. The projection coefficients satisfy the normal equations $\E[x_t(\varepsilon)u_t(\varepsilon)]=0$ for every $\varepsilon$, and differentiating them gives $\E[\dot x_tu_t]+\E[x_t\dot u_t]=0$. Substituting $\dot u_t$ and solving,
+\[
+\dot\pi=\E[x_tx_t']^{-1}\Big(\E[\dot x_tu_t]+\sum_{l=1}^p\E[x_tS_{t-l}']\delta\,\pi_{G,l}\Big).
+\]
+This is the expression $\dot u_t(\delta)$ referred to in the statement.
+
+Step 3 (quotient rule). Differentiating $\gamma_h(\varepsilon)$,
+\[
+\dot\gamma_h=\frac{\E[\dot G_{t+h}u_t]+\E[G^\ast_{t+h}\dot u_t]}{\E[u_t^2]}-\frac{\E[G^\ast_{t+h}u_t]}{\E[u_t^2]}\,\frac{2\E[u_t\dot u_t]}{\E[u_t^2]},
+\]
+and substituting $\dot G_{t+h}=-\delta'S_{t+h}$ and $\E[G^\ast_{t+h}u_t]/\E[u_t^2]=\gamma_h$ gives \eqref{eq:J}.
+
+Step 4 (conditions for $J_h=0$). Under (i), $\pi_{G,l}=0$, so $\dot u_t=-x_t'\dot\pi$ and $\dot\pi=\E[x_tx_t']^{-1}\E[\dot x_tu_t]$. The elements of $\E[\dot x_tu_t]$ are $-\delta'\E[S_{t-l}u_t]$, which are zero under (ii). Hence $\dot\pi=0$ and $\dot u_t=0$, so the second and third terms of \eqref{eq:J} vanish, and the first is zero under (ii). $\square$
+
+A natural alternative to the residual bootstrap of Section \ref{sec:estimation} multiplies the residuals by Rademacher weights. The wild bootstrap reproduces the sampling distribution of the slope coefficients of an autoregression \citep{goncalveskilian2004}, and it is known to fail for functions of the innovation covariance \citep{bruggemann2016inference}. The following result makes the failure explicit for the impact response of the CVAR, which depends only on that covariance.
+
+\begin{thm}[Wild bootstrap at impact\label{thm:wild}]
+Replace step (ii) by $\epsilon^\ast_t=\xi_t\hat\epsilon_t$ with $\xi_t$ i.i.d. Rademacher, and let $\tilde\Sigma^\ast$ be the residual covariance matrix of the VAR re-estimated on the bootstrap series. Then
+\begin{equation}
+\tilde\Sigma^\ast=\hat\Sigma-Q^\ast,\qquad Q^\ast=(\tilde B^\ast-\hat B)'\,\frac{X^{\ast\prime}X^\ast}{N}\,(\tilde B^\ast-\hat B)\succeq0,
+\label{eq:wild}
+\end{equation}
+where $\hat B$ and $\tilde B^\ast$ are the original and the bootstrap coefficient estimates, $X^\ast$ the bootstrap regressors and $N$ the number of observations. If the bootstrap process is stationary, $Q^\ast=O_p(N^{-1})$. The bootstrap impact response, a smooth function of $\tilde\Sigma^\ast$, therefore differs from the estimate by $O_p(N^{-1})$ while the sampling error of the estimate is $O_p(N^{-1/2})$, so the coverage of the percentile band at impact tends to zero as $N$ grows.
+\end{thm}
+
+
+
+Theorem \ref{thm:wild} is exact for the identity in \eqref{eq:wild} and asymptotic for the rate. The impact response is not constant across wild bootstrap draws, because the VAR is re-estimated in each draw, but its variation is of smaller order than the sampling variation.
+
+\paragraph{Proof of Theorem \ref{thm:wild}.} The bootstrap series is $Z^\ast_t=\hat c+\sum_l\hat A_lZ^\ast_{t-l}+\xi_t\hat\epsilon_t$. Let $E^\ast$ be the $N\times n$ matrix of the bootstrap errors $\xi_t\hat\epsilon_t'$, $X^\ast$ the matrix of the regressors, and $\tilde B^\ast=(X^{\ast\prime}X^\ast)^{-1}X^{\ast\prime}Z^\ast$ the least-squares estimate.
+
+Step 1 (the bootstrap covariance). The bootstrap residuals are $E^\ast-X^\ast(\tilde B^\ast-\hat B)$, and the normal equations $X^{\ast\prime}(E^\ast-X^\ast(\tilde B^\ast-\hat B))=0$ give
+\[
+\begin{aligned}
+\tilde\Sigma^\ast&=\frac1N\big(E^\ast-X^\ast(\tilde B^\ast-\hat B)\big)'\big(E^\ast-X^\ast(\tilde B^\ast-\hat B)\big)\\
+&=\frac1NE^{\ast\prime}E^\ast-(\tilde B^\ast-\hat B)'\frac{X^{\ast\prime}X^\ast}{N}(\tilde B^\ast-\hat B).
+\end{aligned}
+\]
+Since the same weight $\xi_t$ multiplies every element of $\hat\epsilon_t$ and $\xi_t^2=1$,
+\[
+\frac1NE^{\ast\prime}E^\ast=\frac1N\sum_t\xi_t^2\,\hat\epsilon_t\hat\epsilon_t'=\hat\Sigma
+\]
+in every draw, which gives \eqref{eq:wild}. The matrix $Q^\ast$ is a quadratic form in a positive semidefinite matrix, hence positive semidefinite.
+
+Step 2 (the order of $Q^\ast$). If the bootstrap process is stationary, $X^{\ast\prime}X^\ast/N=O_p(1)$ and $\tilde B^\ast-\hat B=(X^{\ast\prime}X^\ast)^{-1}X^{\ast\prime}E^\ast=O_p(N^{-1/2})$ in probability, by the central limit theorem for the wild bootstrap of autoregressions \citep{goncalveskilian2004,bruggemann2016inference}. Hence $Q^\ast=O_p(N^{-1})$.
+
+Step 3 (the impact response). The impact response is a smooth function of the innovation covariance matrix alone, $\gamma_0=\Sigma_{GW\cdot R}/\Sigma_{WW\cdot R}$, the ratio of the partial covariances given the innovations of $R_t$, which is continuously differentiable where $\Sigma_{WW\cdot R}>0$. By Step 1 and Step 2, every bootstrap draw satisfies $\gamma^\ast_0-\hat\gamma_0=O_p(N^{-1})$, so the percentile band has length $O_p(N^{-1})$ and lies within $O_p(N^{-1})$ of $\hat\gamma_0$. If $\sqrt N(\hat\gamma_0-\gamma_0)$ converges to a non-degenerate normal distribution, the probability that $\gamma_0$ lies in a set of length $O_p(N^{-1})$ around $\hat\gamma_0$ tends to zero. $\square$
+
+
+\section{The test of the design: assumption, bootstrap and correlated innovations\label{sec:supp-testboot}}\label{sec:supp-test}
+
+This section states the assumption under which Theorem \ref{thm:po} holds and the sieve bootstrap that computes the p-value of the test, with its proof, and then extends the test to innovations of the cycle that are correlated with those of the controls.
+
+\begin{assumption}[Orthogonal innovations\label{assu:T}]
+(i) The policies are stationary under the null and under the alternative, and $(\Delta Y^{0\prime}_t,P_t')'$ is a stationary linear process with absolutely summable coefficients, independent and identically distributed innovations with finite fourth moments, and $r\leq K$ stochastic trends. (ii) The innovations of $v_t$ are uncorrelated with the changes of the controls and of the policies at all leads and lags. (iii) The initial condition is small, $T^{-1/2}u_0\to_p0$.
+\end{assumption}
+
+To see what the assumption asks of an application, consider a regional government that pays its residents a dividend once a year, with an amount set by conditions that may themselves respond to the economy, as in the application to Alaska. Part (i) asks the dividend to be a stationary policy, as a bounded payment made once a year is, and to remain one under both hypotheses, whether the controls reproduce every trend of the region or the region also carries a trend of its own, since the test is computed under both. Part (ii) concerns the shocks specific to the region, the ones that would give it a trend of its own. It asks them to be unrelated to the shocks that move the controls and to the innovations of the dividend, and the second half is a restriction on the policy: the government may set the dividend in response to developments the region shares with its controls, but it may not respond to the past of the component specific to the region, such as its own labour market outcomes.\footnote{When the policy reacts to past changes of the treated unit and the cycle is serially correlated, the changes of the policy are correlated with the current innovations of the cycle and the null distribution shifts by a term proportional to that correlation. In the simulations of Supplementary Appendix \ref{sec:montecarlo}, with a reaction to the twelve-month change of the treated unit, the shift makes the test conservative.} Part (iii) is the condition under which point-optimal unit root tests are optimal \citep{ERS1996}: it excludes an initial condition drawn from the stationary distribution of a process far from the unit root, which affects the power of these tests \citep{MullerElliott2003}.\footnote{When the innovations of $v_t$ are correlated with the changes of the controls, the limit of $P_T$ depends on the long-run correlation, as for the residual-based tests \citep{Pesavento2004}, and power falls. Supplementary Appendix \ref{sec:supp-test} gives a version of the test that uses the correlation and remains valid, at a cost in power when the correlation is absent.}
+
+The sieve bootstrap works as follows. Let $\hat e_t$ be the residuals of the regression with $\alpha=1$, fit an autoregression of order $p_T$ to them, resample its residuals, rebuild $Y^{1\ast}_t$ by cumulating the fitted changes and the bootstrap errors with the controls and the policy terms held at their observed values, and compute $P^\ast_T$.
+
+\begin{prop}[Sieve bootstrap\label{prop:sieve}]
+Let Assumption \ref{assu:T} hold under the null, with $v_t$ an invertible linear process, and let $p_T\to\infty$ with $p_T=o\big((T/\log T)^{1/2}\big)$. Then the bootstrap distribution of $P^\ast_T$ converges in probability to the null limit in Theorem \ref{thm:po}(a), and the bootstrap test has asymptotic size equal to its nominal level.
+\end{prop}
+
+In applications I set $p_T=\lceil 16\,(T/200)^{1/3}\rceil$, which satisfies the rate of Proposition \ref{prop:sieve} and gives sixteen lags with two hundred monthly observations. The simulations of Supplementary Appendix \ref{sec:montecarlo} show that data-driven choices of the order select autoregressions too short to capture the dynamics of a differenced persistent cycle, that shorter fixed orders leave the test oversized and longer ones cost power, and that this rule delivers close to the nominal size while the test keeps power well above the residual-based tests.
+
+The proof uses the notation of the proofs for Section \ref{sec:test} in the Appendix of the paper. For the bootstrap, $\hat\kappa$ denotes the coefficients of the regression in differences, of $\Delta Y^1_t$ on the constant and $\Delta V_t$, $\hat e_t$ its residuals, and $P^{u\ast}_T$ the statistic computed from the bootstrap cycle $u^\ast_t$ with the constant as the only regressor.
+
+\begin{lem}\label{lem:boot}
+Let $E^\ast$, $\mathrm{Var}^\ast$ and $P^\ast$ refer to the bootstrap distribution conditional on the data, and let $e^\ast_t=\sum_{j=1}^{p_T}\hat\phi_je^\ast_{t-j}+\varepsilon^\ast_t$ be the sieve process, with $\varepsilon^\ast_t$ drawn independently from the centred residuals of the autoregression of order $p_T$ fitted to the residuals $\hat e_t$ of the regression in differences, and $u^\ast_t=\sum_{s\leq t}e^\ast_s$. Under the null, Assumption \ref{assu:T} and $p_T\to\infty$ with $p_T=o((T/\log T)^{1/2})$:
+\begin{enumerate}
+\item[(a)] $T^{-1/2}u^\ast_{[sT]}\Rightarrow\omega W_0(s)$ in $P$-probability;
+\item[(b)] $\sum_t\Delta V_te^\ast_t=O_{p^\ast}(T^{1/2})$, $T^{-1}\sum_t\Delta V_tu^\ast_{t-1}=O_{p^\ast}(1)$, $T^{-1}\sum_tx_{t-1}e^\ast_t=O_{p^\ast}(1)$ and $T^{-1}\sum_tw_{t-1}e^\ast_t=O_{p^\ast}(T^{-1/2})$, in $P$-probability.
+\end{enumerate}
+\end{lem}
+
+\noindent Proof. (a) Under the null, $\hat e_t=v_t-\Delta V_t'(\hat\kappa-\vartheta)$, up to the constant, with $\hat\kappa-\vartheta=O_p(T^{-1/2})$, because the regression in differences regresses $v_t$ on stationary regressors uncorrelated with it; hence $T^{-1}\sum_t(\hat e_t-v_t)^2=O_p(T^{-1})$. The autoregressive coefficients fitted to $\hat e_t$ and to $v_t$ then differ by $O_p(p_TT^{-1/2})$ in norm by the eigenvalue argument of Lemma \ref{lem:lrv}, which is $o_p(1)$ under the rate on $p_T$, and the invariance principle for the sieve bootstrap of \citet[Theorem 3.3]{Park2002} applies to the sieve fitted to $\hat e_t$, as in \citet{ChangPark2003}, with long-run variance converging to $\omega^2$.
+(b) Conditional on the data the regressors are fixed, $E^\ast[e^\ast_t]=0$, and with probability tending to one the spectral density of $e^\ast_t$ is bounded by a constant $C$ \citep{Park2002}. For any fixed weights $a_t$, $\mathrm{Var}^\ast(\sum_ta_te^\ast_t)\leq2\pi C\sum_ta_t^2$. Taking $a_t=\Delta V_t$ gives $O_p(T)$, hence the first statement. Writing $\sum_t\Delta V_tu^\ast_{t-1}=\sum_se^\ast_s(V_T-V_s)$, with $\sum_s\|V_T-V_s\|^2=O_p(T^2)$ by Lemma \ref{lem:fclt}(a), gives the second. Taking $a_t=x_{t-1}$, with $\sum\|x_{t-1}\|^2=O_p(T^2)$, gives the third, and $a_t=w_{t-1}$, with $\sum\|w_{t-1}\|^2=O_p(T)$, the fourth. $\square$
+
+\paragraph{Proof of Proposition \ref{prop:sieve}.} The bootstrap sample is $Y^{1\ast}_t=Y^1_1+\sum_{2\leq s\leq t}(\hat\kappa'\Delta V_s+e^\ast_s)$, with the regressors held at their observed values. Since the bootstrap statistic is invariant to the coefficients of the regressors, $P^\ast_T$ is the statistic computed from $Y^{1\ast}$ with cycle $u^\ast_t$, whose initial condition is zero. The decomposition \eqref{eq:Sdecomp} holds with $u^\ast$ in place of $u$ and the observed regressors, and Lemma \ref{lem:boot} provides, in $P^\ast$-probability and with probability tending to one, the orders of Lemma \ref{lem:fclt} on which Lemma \ref{lem:orders} rests, with $c=0$. The argument of Lemma \ref{lem:orders} and of the proof of Theorem \ref{thm:po} therefore applies conditionally, so $P^\ast_T=P^{u\ast}_T+o_{p^\ast}(1)$ in probability. The proof of Lemma \ref{lem:lrv} applies conditionally as well, with $e^\ast_t$ a finite autoregression of order $p_T$ whose coefficients converge to those of the autoregressive representation of $v_t$, so the bootstrap long-run variance estimator converges to $\omega^2$ in $P^\ast$-probability. By Lemma \ref{lem:boot}(a) and the continuous mapping theorem, $P^{u\ast}_T$ converges in distribution, in probability, to $\bar c^2\int_0^1W_0^2-\bar c\,W_0(1)^2$, the null limit of Theorem \ref{thm:po}(a), which has a continuous distribution. The bootstrap p-value is therefore asymptotically uniform under the null, and the test has asymptotic size equal to its nominal level \citep{Park2003}. $\square$
+
+When the innovations of the cycle are correlated with those of the controls, the null distribution and the power of the test of Section \ref{sec:test} depend on the correlation, as for every test of the null of no cointegration \citep{Pesavento2004}. In the error-correction form of \eqref{eq:testmodel},
+\[
+\Delta Y^1_t=(\rho-1)(Y^1_{t-1}-\mu-b'Y^0_{t-1})+\kappa'\Delta Y^0_t+\eta_t,\qquad \kappa=b+\omega,
+\]
+where $\omega$ is the coefficient of the projection of the innovations of the cycle on those of the controls. The test of Section \ref{sec:test} imposes $\kappa=b$, which is the restriction implied by $\omega=0$. Two conditional versions use the correlation. CPO$_C$ adds $\Delta Y^0_t$, not quasi-differenced, to the regressions at $\bar\alpha$ and at 1, with a free coefficient. CPO$_K$ fixes the coefficient at its estimate $\hat\kappa$ from the regression of $\Delta Y^1_t$ on $\Delta Y^0_t$ and the changes of the policy terms, where it is identified under the null, and regresses $Y^1_t-\alpha Y^1_{t-1}-\hat\kappa'\Delta Y^0_t$ on the quasi-differenced constant, on $(1-\alpha)Y^0_{t-1}$ and on the quasi-differenced policy terms.
+
+Table \ref{tab:supp-cpo} and Figure \ref{fig:supp-cpo} compare them, with $\bar c=-7$ for every point-optimal statistic, as in Section \ref{sec:test}. Both conditional tests are the most powerful feasible tests when the correlation is strong, but without correlation they reject less often under the alternative than under the null when there are several controls. The reason is common to both. Once the changes of the controls carry their own coefficient, the coefficient on the lagged levels of the controls is no longer tied to the coefficient on their changes, and under the null the lagged levels can fit part of the treated unit's own random walk. The test of Section \ref{sec:test} avoids the problem because the controls enter only quasi-differenced, so that the coefficient on their lagged levels is pinned down by the co-movement of the changes. Using the correlation therefore requires information on the weights, which is the role of the weighting over cointegrating vectors in \citet{ElliottPesavento2009}.
+
+The adaptive test rejects when the smaller of the p-values of the test of Section \ref{sec:test} and of CPO$_K$ is below the 5 percent quantile of its null distribution, both computed under uncorrelated innovations, or from the sieve bootstrap. It holds its size, is never far from the better of the two tests, and gives up part of the power of the test of Section \ref{sec:test} when the correlation is absent. In the CVAR designs the test of Section \ref{sec:test} remains the most powerful even with correlation, so the adaptive test is the alternative for applications in which the treated unit is suspected to share specific shocks with a few of the controls.
+
+\safeinput{table15.tex}
+
+\begin{figure}[H]
+\centering\safegraphic[width=\textwidth]{Figure_MC_cpo.png}
+\caption{Conditional and adaptive tests, $T=200$: size-adjusted rejection rates against $g=T(1-\rho)$.\label{fig:supp-cpo}}
+\end{figure}
+
+
+\section{Spillovers and non-linear effects\label{sec:spillnl}}
+
+This section extends the CVAR to policies that spill over to the controls and to effects that are not linear in the policy surprise. Supplementary Appendix \ref{sec:montecarlo} reports simulations for both.
+
+Part (ii) of Assumption \ref{assu:A1} excludes spillovers from the policy to the controls. In many empirical applications, the use of control units is the subject of debate, because a policy applied to one unit may spill over to its neighbours. This concern has given rise to a literature built around exposure mappings \citep{Manski2013,AronowSamii2017,Leung2020,forastiere2021identification,VazquezBare2023}. An exposure mapping is a function that links each control unit to the treated unit, usually calibrated on the distance between the two. Works in this literature generally assume that the exposure mapping is known, which turns spillovers into a problem akin to an omitted variable bias, and several papers show that including the exposure term in the main regression removes the bias that results from its omission \citep{DelgadoFlorax2015,Clarke2017,CaoDowd2019,Butts2021}.
+
+The main difference between difference-in-differences or synthetic control and the setting considered here is that in macroeconomics it is often hard to find several counterfactuals with varying degrees of exposure to the spillover. One could argue that the economy of Georgia can act as a counterfactual for what happens in Tennessee, but it is harder to argue that New York can act as a counterfactual for Oklahoma, because the two economies are exposed in different ways to sectors such as agriculture and finance. Geographical distance affects both the size of the spillovers and the similarity of two economies. Accounting for spillovers is therefore first a task of the modeller, who must show that the treated unit and the controls are similarly exposed to the common trends that the CVAR removes. When this is done and two or more controls are available, the spillover can be specified through a spatial weight based on the squared distance between the treated unit and each control, as in spatial econometrics \citep{Anselin1988,LeSagePace2009}, and the effect of the policy can be recovered from the variation in exposure across controls. I follow this literature in making the following assumption.
+
+\begin{assumption}[Exposure mapping\label{assu:S}]
+For each control $k$ and every path, $Y^0_{kt}(w_{-\infty:t})-Y^0_{kt}(0)=\pi x_k\,[Y^1_t(w_{-\infty:t})-Y^1_t(0)]$, where $x_k\geq0$ is a known exposure of control $k$ to the treated unit, such as $x_k=(d_1/d_k)^2$ with $d_k$ the distance between the treated unit and control $k$, and $\pi$ is unknown. For each control, the cycle $G_{kt}=Y^1_t-b_kY^0_{kt}$ satisfies Assumptions \ref{assu:A2}, \ref{assu:A4} and \ref{assu:A5} with the weight $b_k$, and Assumption \ref{assu:A1} holds with its part (ii) replaced, for the controls, by the condition above.
+\end{assumption}
+
+In the application, the exposure of a control state is its squared distance from Alaska relative to the closest control, so that Washington, the state geographically closest to Alaska \citep{Kueng2018}, has the largest exposure and Minnesota the smallest. The parameter $\pi$ is the share of the effect on the treated state that reaches a control at the reference distance.
+
+Let $Z_t=(R_t',W_t,G_{1t},\dots,G_{Kt})'$, let $u_t$ be the innovation of the policy in the recursive VAR in $Z_t$, defined as in \eqref{eq:innovation}, and let $g_{k,h}=\E[G_{k,t+h}u_t]/\E[u_t^2]$ be the response of the cycle with control $k$.
+
+\begin{thm}[Spillovers\label{thm:spill}]
+Under Assumptions \ref{assu:A3} and \ref{assu:S}, for every horizon $h\geq0$:
+\begin{enumerate}
+\item[(a)] $g_{k,h}=(1-b_k\pi x_k)\,\theta_h$ for every control $k$, and the response of the cycle with weights $b$ is $(1-\pi\,b'x)\,\theta_h$.
+\item[(b)] If a control has $x_j=0$, then $\theta_h=g_{j,h}$.
+\item[(c)] If the numbers $c_k=b_kx_k$ are not all equal, the linear projection of $g_{k,h}$ on a constant and $c_k$ across controls has intercept $\theta_h$ and slope $-\pi\theta_h$.
+\end{enumerate}
+\end{thm}
+
+Part (a) shows that a spillover attenuates the response of the CVAR by the share of the effect that reaches the controls, weighted by their exposure. Parts (b) and (c) show how to remove the attenuation. The estimator for (c) estimates the weight of each control separately by \eqref{eq:dols}, estimates one VAR in the policies and the $K$ cycles, so that all the responses share the same policy innovation, and regresses the responses $\hat g_{k,h}$ on a constant and $\hat b_kx_k$ across controls, horizon by horizon. The intercept estimates the effect of the policy surprise, and minus the slope divided by the intercept estimates $\pi$. Bands follow from the bootstrap of Section \ref{sec:estimation} applied to the whole procedure. The simulations in Supplementary Appendix \ref{sec:montecarlo} show that the response of the cycle with the closest control is attenuated when spillovers are present, and that the exposure estimator removes the attenuation.
+
+The second extension relaxes the linearity of Assumption \ref{assu:A3}, under which the effect of a dividend of two thousand dollars is twice that of one thousand, and the effect of a fall in the dividend is the opposite of that of a rise. When the effect is not linear, the response of the CVAR is a weighted average of marginal effects (Supplementary Appendix \ref{sec:identification}), and it does not give the response to a surprise of a given size. Let $\beta_h(\delta)$ be the response of the cycle at horizon $h$ to a policy innovation of size $\delta$.
+
+\begin{assumption}[Innovation-driven non-linearity\label{assu:N}]
+(i) The innovations $u_t$ are i.i.d. with finite variance and independent of $\mathcal{F}_{t-1}$ and of the counterfactual cycle $\{G^0_s\}_{s\geq t}$. (ii) The effect on the cycle is additive over dates, $G_{t+h}=G^0_{t+h}+\sum_{j\geq0}\beta_j(u_{t+h-j})$ with $\beta_j(0)=0$. (iii) For the horizons of interest $\beta_h(u)=\psi(u)'b^{(h)}$ for a dictionary $\psi=(\psi_1,\dots,\psi_L)'$ with $\psi_1(u)=u$, finite second moments and a non-singular covariance matrix.
+\end{assumption}
+
+In the application, part (iii) with $\psi(u)=(u,u^2)'$ allows the effect of an unexpectedly large dividend to grow more than proportionally with its size, and $\psi(u)=(u^+,u^-)'$ allows dividends above and below expectations to have effects of different size.
+
+\begin{thm}[Non-linear impulse response\label{thm:nonlin}]
+Let Assumptions \ref{assu:A1}, \ref{assu:A2} and \ref{assu:N} hold.
+\begin{enumerate}
+\item[(a)] The response of the linear CVAR at horizon $h$ is
+\[
+\gamma_h=\frac{\cov(\beta_h(u_t),u_t)}{\var(u_t)},
+\]
+and, when $\beta_h$ is absolutely continuous,
+\[
+\gamma_h=\frac{\int\beta_h'(w)\omega(w)\,dw}{\int\omega(w)\,dw},
+\]
+a weighted average of the derivative of $\beta_h$ with non-negative weights. It equals $\beta_h(\delta)/\delta$ for every size $\delta$ only if $\beta_h$ is linear.
+\item[(b)] The regression of $G_{t+h}$ on a constant and $\psi(u_t)$ has coefficient vector $b^{(h)}$ on $\psi(u_t)$, so the non-linear impulse response $\beta_h(\delta)=\psi(\delta)'b^{(h)}$ is identified for every $\delta$ in the support. The same holds when $p$ lags of $Z_t$ are added to the regression, and when $u_t$ is replaced by the residual $\hat u_t$ of the policy equation.
+\item[(c)] Linearity is the hypothesis $b_l^{(h)}=0$ for all $l\geq2$.
+\end{enumerate}
+\end{thm}
+
+The estimator is a local projection of the cycle on a dictionary of the estimated policy innovation. Because the non-linearity enters only through the contemporaneous innovation, no transformed lags appear, which is the case in which linear local projections are consistent for the average derivative \citep{GoncalvesHerreraKilianPesavento2021}. The simulations in Supplementary Appendix \ref{sec:montecarlo} show that the linear CVAR misstates the response to surprises of opposite sign when the effect is quadratic, and that the dictionary estimator recovers it.
+
+\paragraph{Proof of Theorem \ref{thm:spill}.} Let $\Delta_t=Y^1_t-Y^1_t(0)$ be the effect of the policy on the treated unit, and let $G^0_{kt}=Y^1_t(0)-b_kY^0_{kt}(0)$ be the counterfactual cycle formed with control $k$.
+
+Step 1 (the cycles). By Assumption \ref{assu:S}, the outcome of control $k$ is its counterfactual plus the share of the effect that reaches it,
+\[
+Y^0_{kt}=Y^0_{kt}(0)+\pi x_k\Delta_t .
+\]
+Substituting in the cycle formed with control $k$,
+\[
+G_{kt}=Y^1_t(0)+\Delta_t-b_k\big(Y^0_{kt}(0)+\pi x_k\Delta_t\big)=G^0_{kt}+(1-b_k\pi x_k)\,\Delta_t .
+\]
+With the weights $b$ on all the controls, the same substitution gives
+\[
+G_t=Y^1_t-b'Y^0_t=G^0_t+(1-\pi\,b'x)\,\Delta_t ,
+\]
+where $G^0_t=Y^1_t(0)-b'Y^0_t(0)$.
+
+Step 2 (the responses). Multiply the first display of Step 1, dated $t+h$, by $u_t$, take expectations and divide by $\E[u_t^2]$:
+\[
+g_{k,h}=\frac{\E[G^0_{k,t+h}u_t]}{\E[u_t^2]}+(1-b_k\pi x_k)\,\frac{\E[\Delta_{t+h}u_t]}{\E[u_t^2]} .
+\]
+The first term is zero by Assumption \ref{assu:A4} for the cycle formed with control $k$, and the second ratio is $\theta_h$ by \eqref{eq:estimand}. Hence $g_{k,h}=(1-b_k\pi x_k)\theta_h$. The same argument applied to the last display of Step 1 gives $(1-\pi b'x)\theta_h$ for the cycle with weights $b$, which proves (a).
+
+Step 3 (identification). If $x_j=0$, then $g_{j,h}=\theta_h$, which is (b). For (c), write $c_k=b_kx_k$. By (a),
+\[
+g_{k,h}=\theta_h-\pi\theta_h\,c_k ,\qquad k=1,\dots,K ,
+\]
+so the points $(c_k,g_{k,h})$ lie on a line with intercept $\theta_h$ and slope $-\pi\theta_h$. When the $c_k$ are not all equal, the linear projection of $g_{k,h}$ on a constant and $c_k$ across controls fits the line exactly and returns its intercept and slope. All the responses are defined with the same innovation $u_t$, because they come from one VAR in $Z_t$. $\square$
+
+\paragraph{Proof of Theorem \ref{thm:nonlin}.} Step 1 (the conditional mean of the cycle). By Assumption \ref{assu:N}(ii), at horizon $h$
+\[
+G_{t+h}=G^0_{t+h}+\beta_h(u_t)+\sum_{j\neq h}\beta_j(u_{t+h-j}) .
+\]
+By Assumption \ref{assu:N}(i), $u_t$ is independent of $G^0_{t+h}$ and of the innovations at every other date, so
+\[
+\E[G_{t+h}\mid u_t]=c_h+\beta_h(u_t),
+\]
+where the constant $c_h$ collects the means of the other terms.
+
+Step 2 (the linear response). By the second part of the proof of Theorem \ref{thm:cycle} and Step 1,
+\[
+\gamma_h=\frac{\E[G_{t+h}u_t]}{\E[u_t^2]}=\frac{\cov(\beta_h(u_t),u_t)}{\var(u_t)} .
+\]
+When $\beta_h$ is absolutely continuous, write $\beta_h(u)=\int_0^u\beta_h'(w)\,dw$. Exchanging the order of integration (Fubini),
+\[
+\cov(\beta_h(u_t),u_t)=\int\beta_h'(w)\,\omega(w)\,dw,\qquad
+\omega(w)=\begin{cases}\E[u_t\mathbf{1}\{u_t\geq w\}], & w\geq0,\\ -\E[u_t\mathbf{1}\{u_t<w\}], & w<0,\end{cases}
+\]
+and $\omega(w)\geq0$ because $\E[u_t]=0$. The same identity with $\beta_h(u)=u$ gives $\var(u_t)=\int\omega(w)\,dw$ \citep{Yitazaki1996}, which proves the weighted-average form. The weights do not depend on $t$ because the innovations are identically distributed. If $\gamma_h=\beta_h(\delta)/\delta$ for every $\delta$, then $\beta_h(\delta)=\gamma_h\delta$, so $\beta_h$ is linear. This proves (a).
+
+Step 3 (the dictionary regression). By Assumption \ref{assu:N}(iii) and Step 1, $G_{t+h}=c_h+\psi(u_t)'b^{(h)}+\eta_{t+h}$ with $\E[\eta_{t+h}\mid u_t]=0$. The regressors $\psi(u_t)$ have a non-singular covariance matrix, so the population regression of $G_{t+h}$ on a constant and $\psi(u_t)$ has coefficient vector $b^{(h)}$ on $\psi(u_t)$, and $\beta_h(\delta)=\psi(\delta)'b^{(h)}$ is identified for every $\delta$ in the support.
+
+Step 4 (lags as controls). The lags of $Z_t$ are measurable with respect to $\mathcal F_{t-1}$, so they are independent of $u_t$ by Assumption \ref{assu:N}(i). In the regression with a constant, $\psi(u_t)$ and the lags are therefore uncorrelated, and by the Frisch-Waugh-Lovell theorem adding the lags leaves the coefficients on $\psi(u_t)$ unchanged.
+
+Step 5 (the estimated innovation). When the policy equation spans the predictable part of the policy, $\hat u_t-u_t=x_t'(\pi-\hat\pi)$ with $\hat\pi-\pi=O_p(T^{-1/2})$. If each $\psi_l$ is Lipschitz, or continuously differentiable with a derivative whose growth is bounded by a polynomial and $u_t$ and $x_t$ have the corresponding moments, then by the mean value theorem and the Cauchy-Schwarz inequality
+\[
+\frac1T\sum_t\big\|\psi(\hat u_t)-\psi(u_t)\big\|^2=o_p(1),
+\]
+so the sample moments of the regression with $\psi(\hat u_t)$ differ from those with $\psi(u_t)$ by $o_p(1)$, and the least-squares coefficients converge to $b^{(h)}$. Both dictionaries of the application, $(u,u^2)'$ and $(u^+,u^-)'$, satisfy the condition.
+
+Part (c) follows from (b), since $\beta_h$ is linear if and only if the coefficients on $\psi_2,\dots,\psi_L$ are zero. $\square$
+
+
+\section{Monte Carlo simulations\label{sec:montecarlo}}
+
+The simulations answer six questions, in the order of the paper: how far the response of a VAR without controls is from that of the CVAR (Table \ref{tab:mc-var}), how the lag length affects the response (Table \ref{tab:mc-lags}), whether the bootstraps that estimate the weights cover the true response (Tables \ref{tab:mc-boot}, \ref{tab:mc-grid} and \ref{tab:mc-joint}), how the extensions to spillovers and non-linear effects and the diagnostics of stationarity perform (Tables \ref{tab:mc-spill}, \ref{tab:mc-nonlin} and \ref{tab:mc-stat}), how the test of the design behaves (Tables \ref{tab:mc-test-size} to \ref{tab:mc-test-feedback} and Figures \ref{fig:mc-test-T200} and \ref{fig:mc-test-T400}), and how the CVAR in changes compares with the alternatives (Table \ref{tab:mc-diff}). The first three use one data generating process, with the notation of the paper, calibrated to the application to unemployment benefits; the extensions use variants of it, and the test of the design and the CVAR in changes use the designs described with their results. The common trends follow
+\begin{equation}
+\Delta F_t=0.3\,\Delta F_{t-1}+\eta_t,
+\end{equation}
+with $\eta_t\sim N(0,I_r)$. The controls and the treated unit without the policy are
+\begin{equation}
+Y^0_t=\Lambda F_t+v_t,\qquad Y^1_t(0)=\lambda'F_t+e_t,\qquad \lambda=\Lambda'b,
+\end{equation}
+with $v_{kt}=0.5\,v_{k,t-1}+\xi_{kt}$, $e_t=0.5\,e_{t-1}+\zeta_t$, standard normal innovations and equal weights $b=\iota_K/K$. When $r=K$, $\Lambda=I_K+0.3\,\iota_K\iota_K'$. When $r<K$, the first $r$ rows of $\Lambda$ are $I_r+0.3\,\iota_r\iota_r'$ and the remaining rows are $(1/r+0.3)\iota_r'$, so that the controls have $K-r$ cointegrating relations among themselves. The two policies react to the common shocks,
+\begin{align}
+R_t&=0.7\,R_{t-1}+0.5\,\iota_r'\eta_t/\sqrt{r}+\varepsilon^R_t,\\
+W_t&=0.5\,W_{t-1}+0.5\,\iota_r'\eta_t/\sqrt{r}+0.3\,R_t+\phi\,G_{t-1}+\varepsilon^W_t,
+\end{align}
+where the second policy also reacts to the lagged cycle with coefficient $\phi$, as extended benefits react to the recent unemployment of a state. The effect of the policy is
+\begin{equation}
+Y^1_t=Y^1_t(0)+E_t,\qquad E_t=0.8\,E_{t-1}+0.2\,W_t.
+\end{equation}
+The calibration closest to the application has $T=200$, $K=6$, $r=5$ and $\phi=0.3$: six controls with one cointegrating relation among them, as the trace test finds for three of the five treated states. The true responses $\theta_h$ and $\gamma_h$ are computed from a sample of 100,000 observations. Each experiment has 500 replications with 499 bootstrap draws, and the bands are 90 percent percentile bands.
+
+The first simulation compares the response of a VAR without controls in $(R_t,W_t,Y^1_t)$ with the CVAR, both with twelve lags, in the calibration closest to the application. Table \ref{tab:mc-var} reports the bias, the root mean squared error and the coverage of the 90 percent bands for the effect of a policy surprise $\theta_h$. The VAR without controls nearly doubles the effect on impact, and its bias persists for more than a year, because the policy reacts to the common shocks and the response inherits their path. Its bands rarely cover the true effect in the first months, and they reach the nominal coverage only at long horizons, where they are much wider than those of the CVAR. The CVAR is close to unbiased at every horizon, with coverage close to the nominal level and a much smaller root mean squared error.
+
+\safeinput{tab_mc_var.tex}
+
+The second simulation compares the CVAR with the lag length selected by the Akaike criterion and fixed at 8 and 12 lags. Table \ref{tab:mc-lags} reports the results. The Akaike criterion selects very few lags, and the response is biased toward zero beyond the first months, with coverage far below the nominal level after a year. With 12 lags the bias disappears up to a year, and the coverage is close to the nominal level at every horizon up to a year. The Ljung-Box test on the residuals of the equation of the cycle never signals the misspecification, at any of the three lag lengths.
+
+\safeinput{tab_mc_lags.tex}
+
+The third simulation compares bootstraps with 12 lags that treat the weights in different ways: one with the weights known, one that holds the estimated weights fixed, one that re-estimates them in every draw with the controls held at their observed values, and the joint bootstrap of Theorem \ref{thm:joint}, which regenerates the controls and re-estimates the weights. The grid compares the first three across seventeen designs, which combine $T=200$ and $400$, three and six controls, controls with and without cointegrating relations among them, policies with and without feedback from the lagged cycle, and a design in which one of the true weights is zero, at the boundary of the constraint. Table \ref{tab:mc-boot} reports the average coverage across designs, and Table \ref{tab:mc-grid} reports every design. Re-estimating the weights with the controls held fixed matches the coverage obtained with the weights known at every horizon up to a year, in every design, including the one at the boundary, which Theorem \ref{thm:joint} excludes, and holding the weights fixed lowers the coverage, most in the designs with six controls. Table \ref{tab:mc-joint} adds the joint bootstrap in the design with six controls and one cointegrating relation among them, with feedback from the lagged cycle, at both sample sizes and with a stronger feedback. Its coverage is close to that obtained with the weights known at every horizon up to a year in all three designs, although its VAR includes the controls, and its bands are of similar width. The recentred version of Theorem \ref{thm:joint} and the version without recentring have coverage within simulation error of each other and bands of the same width, so recentring costs nothing in these designs. In these designs the first-step term is small relative to the sampling error of the VAR, so the bootstraps that hold the controls fixed also come close to the nominal coverage, and the gap of the bootstrap with fixed weights disappears at $T=400$. Two years after the surprise, all bootstraps, including the one with the weights known, under-cover in the designs with feedback, where the response decays slowly and twelve lags leave some truncation, as Theorem \ref{thm:joint} anticipates for a lag length that does not grow with the sample.
+
+\safeinput{tab_mc_boot.tex}
+
+\safeinput{tab_mc_grid.tex}
+
+\safeinput{tab_mc_joint.tex}
+
+
+The remaining simulations turn to the extensions and to the test of the design. The spillover experiment uses five controls that share one common trend with the treated unit, at increasing distance from it, and lets each control receive the share $\pi x_k$ of the effect on the treated unit, with $x_k=(d_1/d_k)^2$. Table \ref{tab:mc-spill} shows that without spillovers all estimators are close to unbiased, and the CVAR with all controls is the most precise. With spillovers, the CVAR with the nearest control is strongly attenuated and the CVAR with all controls moderately so, while the exposure estimator of Theorem \ref{thm:spill} remains unbiased, with a precision close to that of the most distant control.
+
+The non-linear experiment lets the effect of the policy depend on $u+\kappa u^2$. Table \ref{tab:mc-nonlin} shows that when the effect is linear the linear CVAR is unbiased and more precise than the dictionary estimator. When it is quadratic, the linear CVAR understates the response to large surprises and misstates the asymmetry between positive and negative surprises, while the dictionary estimator of Theorem \ref{thm:nonlin} is close to unbiased for surprises of both signs and of different size.
+
+The stationarity experiment replaces the idiosyncratic component of the treated unit with an autoregression of coefficient $\rho$. Table \ref{tab:mc-stat} shows that the Engle-Granger critical values are not valid for the cycle of the CVAR: because the weights are estimated with the policy terms and the constraint, the ADF test rejects a true unit root far more often than its nominal level. With simulated critical values the test has the correct size by construction, and its power against a persistent but stationary cycle is low with two hundred observations and high with four hundred. The KPSS test on the cycle has a size close to the nominal level at the standard critical value, but little power. Netting out the policy terms raises the power of both tests at simulated critical values.
+
+\safeinput{tab_mc_spill.tex}
+
+\safeinput{tab_mc_nonlin.tex}
+
+\safeinput{tab_mc_stat.tex}
+
+The simulations for Section \ref{sec:test} use two designs. In the triangular design, $Y^1_t=0.5+b'x_t+u_t$, the $k$ regressors $x_t$ are random walks with standard normal innovations, $b$ has elements $1/k$, $u_t=\rho u_{t-1}+v_t$ with $u_0=0$, and the innovations of $v_t$ have total correlation $\delta$ with those of $x_t$, spread equally across the regressors. In the CVAR design, the treated unit and the controls follow the data generating process of this section, with persistent idiosyncratic components and two policies that react to the common shocks, and the treated unit receives a further component $u_t$ whose innovations have correlation $\delta$ with the average change of the controls. In both designs $\rho=1-g/T$, so that $g=0$ is the null hypothesis of a trend specific to the treated unit and $g>0$ a local alternative under which the CVAR is valid.
+
+Table \ref{tab:mc-test-size} reports the rejection rates under the null. In the triangular designs the test with the critical values of \citet{ERS1996} has close to the nominal size for one and three regressors, as Theorem \ref{thm:po}(a) implies. In the CVAR design, the persistent idiosyncratic components make the asymptotic critical value too permissive in samples of this length, and the sieve bootstrap with the lag rule of Section \ref{sec:test} brings the rejection rate close to the nominal level. In the triangular designs, where the cycle is serially uncorrelated, the bootstrap is conservative, because the rule fits a longer autoregression than the dynamics require. The residual-based test of \citet{EngleGranger1987} and the system test of \citet{Johansen1991} reject a true null far more often than their nominal level in the CVAR design, and the latter almost always with six controls. Table \ref{tab:mc-test-power} and Figures \ref{fig:mc-test-T200} and \ref{fig:mc-test-T400} report power. Without correlation between the innovations, the CVAR test is close to the bound computed with the true weights, the gap narrows as the sample grows, and the test is far more powerful than every competitor. With correlation the test loses its power, which the adaptive test of Appendix \ref{sec:supp-test} recovers.
+
+Table \ref{tab:mc-test-lags} compares orders of the autoregression in the sieve bootstrap. Short orders leave the test oversized and long orders cost power; orders around twenty with four hundred observations, which the rule of Section \ref{sec:test} delivers, control size in every design while keeping most of the power. Table \ref{tab:mc-test-feedback} reports designs in which the policy reacts to the treated unit. A reaction to the twelve-month change of the treated unit, as in the triggers of extended benefits, leaves the size of the test close to the case without feedback and makes it conservative when the cycle is serially correlated. The augmented statistic, which adds lags of $\Delta Y^1_t$ to both regressions, is oversized and less powerful, so the paper does not use it.
+
+\safeinput{table11.tex}
+
+\safeinput{table12.tex}
+
+\safeinput{table13.tex}
+
+\safeinput{table14.tex}
+
+\begin{figure}[H]
+\centering\safegraphic[width=\textwidth]{Figure_MC_test_T200.png}
+\caption{Test of the design, $T=200$: rejection rates against $g=T(1-\rho)$. Size-adjusted power for all tests except the bootstrap, whose curve shows actual rejection rates.\label{fig:mc-test-T200}}
+\end{figure}
+
+\begin{figure}[H]
+\centering\safegraphic[width=\textwidth]{Figure_MC_test_T400.png}
+\caption{Test of the design, $T=400$. As in Figure \ref{fig:mc-test-T200}.\label{fig:mc-test-T400}}
+\end{figure}
+
+
+Finally, the simulations for Theorem \ref{thm:diff} use a data generating process with one common trend, $F_t=F_{t-1}+\eta_t$, $K$ controls $Y^0_{kt}=F_t+v_{kt}$ with $v_{kt}=0.5v_{k,t-1}+\sigma_v z_{kt}$, and a treated unit $Y^1_t=F_t+e_t+\sum_{j=0}^{2}\tau_jW_{t-j}$ with $\tau=(0.5,0.3,0.1)$. The policy reacts to the common shock, $W_t=0.7W_{t-1}+c\,\eta_t+\varepsilon_t$, and all innovations are independent standard normal. The component specific to the treated unit is a random walk, $e_t=e_{t-1}+\sigma_e\zeta_t$, in the design with a trend of the treated unit, and $e_t=0.8e_{t-1}+\sigma_e\zeta_t$ in the stationary design. The true cumulated response is $\Gamma_h=\sum_{j=0}^{\min(h,2)}\tau_j0.7^{h-j}$, and a VAR without controls adds $c/(1+c^2)$ to it at every horizon. Four designs vary one feature at a time: a trend of the treated unit with four controls, $\sigma_v=0.5$, $\sigma_e=0.3$ and $c=1$; a stationary cycle with $\sigma_e=0.5$; a single control with $\sigma_v=2$, which adds more variance to the cycle than the common trend it removes; and no reaction of the policy to the common shock, $c=0$. Table \ref{tab:mc-diff} compares the CVAR in changes with equal weights, the VAR without controls in changes and the CVAR in levels with estimated weights. The CVAR in changes is close to unbiased in every design, and its bands have close to nominal coverage, slightly below it at intermediate horizons when the treated unit has a trend of its own. The VAR without controls carries the common-trend term whenever the policy reacts to the common shock, and its bands then almost never contain the true response. When the policy does not react, it is unbiased and its coverage is close to nominal. The CVAR in levels with estimated weights gives accurate point estimates in every design, but when the treated unit has a trend of its own its bands at impact contain the true response in a minority of replications, and its coverage is below the nominal level at the other horizons, because the weights come from a regression without a cointegrating relation. When the cycle is stationary it is valid and, at long horizons, more precise than the CVAR in changes. This is the trade-off that the test of Section \ref{sec:test} resolves. The width of the bands depends on how much variance the controls add to the cycle. With four controls whose idiosyncratic components are small, the bands of the CVAR in changes are considerably narrower than those of the VAR without controls, also in the design in which the policy does not react to the common shock and the VAR without controls is unbiased. With a single control whose idiosyncratic component is large, the cycle is more volatile than the outcome of the treated unit, and the bands of the CVAR are wider at impact and of similar width at longer horizons.
+
+\safeinput{tab_mc_diff.tex}
+
+
+\section{How often do units share all their stochastic trends?\label{sec:screen}}
+
+The CVAR in levels, like any comparison in levels with untreated units, requires that the weighted controls reproduce every stochastic trend of the treated unit. I check how often the data support this requirement by applying the test of Section \ref{sec:test} to the states of the United States, with no policy terms, each state compared with the states it borders. For each state and variable the table reports three tests: the state alone, which should not reject when its series has a stochastic trend; the state against the average of its neighbours; and the state against its neighbours with weights estimated inside the test. The variables are the employment-population ratio and the participation rate from the Local Area Unemployment Statistics, the logarithm of payroll employment from the Current Employment Statistics, the logarithm of the state coincident index of the Federal Reserve Bank of Philadelphia, the logarithm of total personal income from the Bureau of Economic Analysis, and the logarithm of the all-transactions house price index of the Federal Housing Finance Agency, each from the start of its series to the end of 2019. There are no consumer price indices for states, so for prices each of the four Census regions is compared with the other three, and New York, Chicago and Los Angeles, the metropolitan areas with monthly indices over the whole period, with each other.
+
+\safeinput{tab_screen.tex}
+
+Every series behaves as integrated on its own: the test of the unit alone almost never rejects. The gap between a unit and its neighbours, by contrast, rejects about as often as the nominal size of the test for output, income, house prices and consumer prices, and only somewhat more often for the two labour force rates, whose bounded range limits how far a state can drift from its neighbours. Even consumer prices, observed monthly for more than eighty years in the three metropolitan areas, show no rejection, in line with the slow convergence of regional price levels documented for the United States. The few states whose labour force rates keep a stationary gap with their neighbours include Indiana and Illinois, which share the labour market of Chicago.
+
+\safeinput{tab_screen_power.tex}
+
+How much a non-rejection in Table \ref{tab:screen} says depends on the power of the test against gaps that return to their mean slowly. Table \ref{tab:screen-power} reports it in simulated panels built like the state data. The test keeps its nominal size, and its power depends on the persistence of the gap relative to the length of the sample, as the theory of Section \ref{sec:test} implies: it rejects most of the time when the gap has a half-life of about a year and four decades of monthly data are available, and much less often when the half-life is several years. A sieve bootstrap built from the residuals of the autoregression in levels recovers the power of the asymptotic critical values but rejects a true null more than twice as often as its nominal level, which weakens the protection against estimating in levels a treated unit with a trend of its own. The rare rejections of Table \ref{tab:screen} therefore leave two readings open, a stochastic trend specific to most units or gaps that return to their mean over many years, and the data cannot tell them apart. Under either reading the assumption that the controls reproduce every trend of the treated unit cannot be supported from the data, which is why the applications use the CVAR in changes.
+
+
+\section{Alaska: further results\label{sec:app-eb}}
+
+Tables \ref{tab:ak-adjusted} and \ref{tab:ak-bounds} complete the application to Alaska in Section \ref{sec:alaska}: the responses adjusted for the common movement that the estimated weights leave in the cycle, and the bounds of Proposition \ref{prop:bounds}.
+
+\safeinput{tab_alaska_adjusted.tex}
+
+\safeinput{tab_alaska_bounds.tex}
+
+
+Three further checks concern the sample, the donor pool and the treatment of seasonality. Table \ref{tab:ak-samples} re-estimates the main specification on samples ending in December 2015, before the legislature set the amounts of the dividend, and in December 2007, before the dividend, the energy rebate and the recession of 2008, with the weights re-estimated in each sample. The shorter samples contain fewer dividends, and the payroll series start in 1990.
+
+\safeinput{tab_alaska_samples.tex}
+
+Table \ref{tab:ak-pools} estimates the weights from the 12 other states of the Census West region and from all the other states and the District of Columbia. The larger pools reproduce a larger share of the main common movement of Alaska, and the full pool more than all of it, with weights on states far from Alaska in geography and economic structure. The responses with the larger pools are close to those of the main specification and of its adjusted version in Table \ref{tab:ak-adjusted}.
+
+\safeinput{tab_alaska_pools.tex}
+
+The main specification uses seasonally adjusted series. The dividend is paid every October, so its timing coincides with the seasonal pattern of Alaska, and only the variation in its size identifies its effect. The seasonal adjustment removes the average October pattern together with any part of a persistent dividend effect that its moving seasonal factors absorb. Month effects in the unadjusted series remove only the seasonal pattern that they specify. Table \ref{tab:ak-seasonal} reports the main specification with month effects added to the adjusted series and with the unadjusted series and month effects, constant, interacted with a linear trend, and by decade, in the regression of the weights and in the VAR. Month effects leave the results on the adjusted series unchanged. With the unadjusted series, the employment rate rises and unemployment falls in the first three months after the payment, leisure and hospitality employment rises, and the responses of participation and of total payroll employment lose their significance.
+
+\safeinput{tab_alaska_seasonal.tex}
+
+
+\section{Extended unemployment benefits\label{sec:eb}}
+
+This section reports in full the application that Section \ref{sec:ebsum} of the paper summarises. In the United States, unemployment insurance replaces part of the income of workers who lose their jobs, for up to 26 weeks in most states. Since 1970 the Extended Benefits programme (EB) has added weeks of benefits during recessions, and in most recessions Congress has also created a temporary federal programme, most recently Emergency Unemployment Compensation (EUC), which ran from July 2008 to December 2013. Extensions switch on through trigger rules that take as inputs the recent unemployment of each state.
+
+Whether extensions, designed to support workers, also prolong periods of high unemployment is a long-running debate, and neither the theory nor the evidence has settled it. A large microeconometric literature finds that longer potential durations lengthen individual unemployment spells \citep{SchmiederVonWachter2016}. What holds for one worker need not hold for the labour market as a whole, because the channels that operate in the aggregate push in different directions. Extensions transfer income to households that spend most of it, and can act as fiscal stimulus in a recession \citep{McKayReis2016,Kekre2023}. Longer benefits can also improve the outside option of workers in wage bargaining and discourage firms from posting vacancies \citep{HagedornEtAl2019}. Which of these channels dominates is an empirical question.
+
+The empirical question has a clear endogeneity problem. Benefits are extended precisely when the economy enters a recession and unemployment is high and rising, so a comparison of unemployment with and without extensions mixes their effect with the recession that triggered them. The literature has addressed this reverse causality in three ways. Border designs compare neighbouring counties on opposite sides of a state line \citep{BooneEtAl2021,DieterleEtAl2020}, and are exposed to workers who commute across the border and carry the effect of the policy into the comparison county \citep{DieterleEtAl2020}. \citet{ChodorowReichEtAl2019} use revisions of the data that set off the triggers, which produce variation that is short-lived. \citet{AcostaEtAl2025}, building on \citet{Rothstein2011}, compare states that faced the same trigger conditions but had adopted different optional triggers. Most estimates for the Great Recession are close to zero, with exceptions that find large effects \citep{HagedornEtAl2019,JohnstonMas2018}. \citet{AcostaEtAl2025} find that a standard extension raises unemployment when the duration of benefits is short to begin with, and has virtually no effect when durations are already long, as they were in the Great Recession.
+
+The CVAR addresses the reverse causality directly. A national recession raises unemployment in every state, and the triggers switch on the extensions in the states whose unemployment crosses the thresholds set in federal law, while the others go through the same recession without them. A VAR without controls cannot solve this problem. It does not control for the common trends, so by Theorem \ref{thm:var} its response contains the reaction of the extensions to the national cycle, including the recovery that follows the downturn in which they switched on, and it attributes that recovery to the extensions even if they have no effect at all. The endogeneity of the policy is exactly what a VAR on the data of the treated state alone leaves unaddressed. Comparing each state that received extensions with states that did not removes that reaction, and choosing comparison states that do not border it addresses the spillovers that affect border designs. I estimate the CVAR and a VAR without controls on the same data, state by state and on average.
+
+The assumptions of Section \ref{sec:assumptions} take a specific form for extended benefits. Extensions switch on and off through weekly trigger notices, so at a monthly frequency workers and firms have little scope to respond to an extension before it starts (Assumption \ref{assu:A1}(i)). The triggers are averages of insured unemployment over the previous thirteen weeks, so an extension responds to the recent past of the state, which the VAR conditions on, and the data that set them off are measured in real time with errors that are unrelated to economic conditions \citep{ChodorowReichEtAl2019}; both features support Assumption \ref{assu:A4}. The triggers also compare current unemployment with its average over the previous two years, so the policy is a function of changes in unemployment and remains stationary even when a state has a trend of its own, as part (i) of Assumption \ref{assu:T} requires.
+
+To compare each state with its controls, I use monthly data from October 2002 to December 2019, which end before the pandemic programmes. The outcome is the state unemployment rate from the Local Area Unemployment Statistics.\footnote{Seasonally adjusted series of the Local Area Unemployment Statistics, retrieved from FRED, series \texttt{TXUR} for Texas and the analogous code for the other states: \url{https://fred.stlouisfed.org/series/TXUR}.} The policy $W_t$ is the number of weeks of EB available in the state, averaged over the weeks of the month and divided by ten, built from the trigger notices of the Department of Labor.\footnote{Trigger notices of the Department of Labor, \url{https://oui.doleta.gov/unemploy/claims_arch.asp}.} It coincides with the series in the replication files of \citet{BooneEtAl2021} where the two overlap. The other policy $R_t$ is the number of weeks of EUC from the same replication files, and zero outside the period in which EUC existed. Appendix \ref{sec:data} lists the sources.
+
+The controls are the seven states in which EB never switched on: South Dakota, North Dakota, Iowa, Nebraska, Wyoming, Utah and Oklahoma. Every other state with at least twelve months of EB in the sample is a treated state, so that no state is selected by its results. For each treated state I drop the controls that border it, which removes, for example, Nebraska and Oklahoma for Kansas, and Oklahoma for Texas.
+
+Figure \ref{fig:eb-data} shows the policies and the outcome. Nearly all the weeks of EB fall between 2009 and 2012, while EUC was also in force. The lower panel compares the average unemployment rate of the treated states with that of the controls: the two share the movements of the national cycle, which the CVAR removes, and the treated states rise further in the Great Recession, which is the component that the test of the design attributes to the treated states.
+
+\begin{figure}[htbp]
+\centering\safegraphic[width=0.85\textwidth]{fig_eb_data.pdf}
+\caption{Extended benefits: policy and outcomes. Top: weeks of EB and of EUC available, averaged over the treated states. Bottom: unemployment rate, average of the treated states and average of the controls, the states in which EB never switched on. Monthly, October 2002 to December 2019.\label{fig:eb-data}}
+\end{figure}
+
+
+Before estimating the CVAR, the test of Section \ref{sec:test} checks whether each treated state shares its trends with its controls, and its outcome decides which version of the CVAR to estimate. Table \ref{tab:eb-tests} reports it, together with tests for a unit root in each unemployment rate. The unemployment rates behave as integrated series over the sample: the test of \citet{ERS1996} rejects a unit root for few of them, so the framework of common stochastic trends applies. The test of the design rejects no more often than its size would produce by chance, with weights estimated by \eqref{eq:dols} or set equal, with or without level shifts, and for every number of lags of the policies. The controls are rural states of the Great Plains and the Mountain West, where the Great Recession was mild, and the depth of the recession in each treated state leaves in its unemployment a slow-moving component that the controls do not reproduce. Following Section \ref{sec:test}, I estimate the CVAR in changes, with equal weights on the controls of each treated state (Theorem \ref{thm:diff}). The arguments given for Assumption \ref{assu:A4} carry over to Assumption \ref{assu:A4d}, because the triggers respond to the recent past of insured unemployment, which the VAR conditions on through the past changes of the cycle.
+
+\safeinput{tab_eb_tests.tex}
+
+The CVAR in changes then takes a simple form. For each treated state $s$ with controls $k=1,\dots,K_s$, the cycle is
+\begin{equation}
+G_{st}=Y_{st}-\frac{1}{K_s}\sum_{k=1}^{K_s}Y^0_{kt},
+\end{equation}
+and the VAR is
+\begin{equation}
+\begin{pmatrix}R_{st}\\W_{st}\\\Delta G_{st}\end{pmatrix}=c_s+\sum_{l=1}^{p_s}A_{sl}\begin{pmatrix}R_{s,t-l}\\W_{s,t-l}\\\Delta G_{s,t-l}\end{pmatrix}+\epsilon_{st},
+\end{equation}
+with EUC ordered first, so that the EB innovation is net of the contemporaneous movement in EUC. The response is the cumulated response $\Gamma_h$ of \eqref{eq:cumcycle} to an EB innovation of ten weeks. The VAR without controls replaces $\Delta G_{st}$ with $\Delta Y_{st}$. The lag order of each model is the smallest order up to twelve at which the test of \citet{LjungBox1978} with twelve lags does not reject the absence of autocorrelation at 5 percent in the residuals of the equations for EB and for the outcome.\footnote{The equation for EUC is excluded from the rule, because EUC follows a schedule set by federal legislation.} The weeks of EB are zero in most months and 13 or 20 when the programme is on, with intermediate monthly averages in the months in which it switches. By Theorem \ref{thm:nonneg}, the response therefore mixes the effect of switching EB on with the effect of moving from 13 to 20 weeks, with weights that depend on how often each occurs. The weights on the controls are known, so the bands come from the residual bootstrap of Theorem \ref{thm:resid}, with the responses cumulated in each draw. For the average across states, every state uses the same lag order, the larger of the median orders selected for the two models, and the bootstrap draws the same months for every state, so that the bands of the average account for the controls that the states share.
+
+Figure \ref{fig:eb-avg} and Table \ref{tab:eb-avg} report the results, averaged across states. The VAR without controls finds that an extension is followed by a fall in unemployment that keeps growing for three years. The CVAR finds a response close to zero at every horizon, and from six months on its band excludes the estimate of the VAR without controls. Its band is also narrower at every horizon.
+
+\safeinput{tab_eb_average.tex}
+
+\begin{figure}[htbp]
+\centering\safegraphic[width=\textwidth]{fig_eb_average.pdf}
+\caption{Response of the unemployment rate to ten additional weeks of EB, average across states. (a) Cumulated response of the CVAR, with 68 and 90 percent bands, and of the VAR without controls, with its 90 percent band. (b) Response of the treated state and of the weighted controls in the VAR with both, and of their difference (Proposition \ref{prop:placebo}), with 90 percent bands. (c) Response of the weeks of EB, in tens, to their own innovation, and impulse causal effect of one week of EB from Theorem \ref{thm:direct}, with 90 percent bands. Percentage points.\label{fig:eb-avg}}
+\end{figure}
+
+Section \ref{sec:app-eb} reports local-projection difference-in-differences estimates on the same panel, with the never-triggered states and with clean controls as comparison units (Table \ref{tab:eb-lpdid}). With clean controls, which include the treated states in the years in which they had no extended benefits, the difference-in-differences estimate is close to zero at every horizon, in agreement with the CVAR, and its bands are several times wider. Figure \ref{fig:eb-states} shows that the pattern of the CVAR holds state by state. The VAR without controls finds a fall in unemployment in most states. The responses of the CVAR are spread around zero, falls and increases in roughly equal number, with few bands that exclude zero. From six months on, the band of the CVAR is narrower than that of the VAR without controls in every state, and at impact the two are of similar width. Section \ref{sec:app-eb} reports every state.
+
+\begin{figure}[htbp]
+\centering\safegraphic[width=\textwidth]{fig_eb_states.pdf}
+\caption{Response of the unemployment rate to ten additional weeks of EB, by state. Left: response after twelve months, CVAR and VAR without controls, with 90 percent bands. Right: width of the band of the CVAR relative to that of the VAR without controls, at six, twelve and twenty-four months. Lag orders chosen state by state.\label{fig:eb-states}}
+\end{figure}
+
+Panel (b) of Figure \ref{fig:eb-avg} shows where the response of the VAR without controls comes from. The weighted controls, states that never extended benefits, respond to the extensions of the treated states about as much as the treated states themselves, with bands that exclude zero from six months on, and the difference between the two responses stays close to zero at every horizon. By Proposition \ref{prop:placebo}, the response of the controls measures the bias from the common trends: the extensions switch on in the depth of a recession that also raises unemployment in the controls, and the recovery that follows lowers unemployment in every state. Table \ref{tab:eb-bounds} reports the bounds of Proposition \ref{prop:bounds}. The bounds reach the response of the treated state in the VAR with the controls added only when the bias specific to the treated states is allowed to be of the same order as the bias that the controls measure, so the conclusion that extensions had little effect does not rest on the exact form of Assumption \ref{assu:A4d}.
+
+\safeinput{tab_eb_bounds.tex}
+
+Panel (c) of Figure \ref{fig:eb-avg} reports the decomposition of Theorem \ref{thm:direct}. A surprise extension is followed by additional weeks of EB for more than two years, through the persistence of the programme and the reaction of the triggers. Once these weeks are divided out of the response of the cycle, the impulse causal effect of one week of benefits, holding the later weeks fixed, is close to zero at every horizon.
+
+Nearly all the variation in EB in the sample occurs between 2009 and 2012, when EUC was in force in every state and potential durations were already long. The estimates of the CVAR therefore speak to extensions at long durations, and they agree with the finding of \citet{AcostaEtAl2025} that such extensions have virtually no effect on unemployment. The VAR without controls reaches the opposite conclusion, a large fall in unemployment, which is also opposite in sign to the microeconometric evidence, and the response of the controls shows that it reflects the recovery from the Great Recession.
+
+A different comparison comes from difference-in-differences. Table \ref{tab:eb-lpdid} estimates the effect of extended benefits with the local-projection difference-in-differences of \citet{dube2023local}. An event is a month in which EB switches on in a state after a year without it, and the comparison units are either the never-triggered states or every state-month without EB from a year before the event to the horizon. The regression includes month fixed effects, lags of the change in the unemployment rate and the changes in the weeks of EUC. To compare the coefficients with the responses of the CVAR, the table divides them by the average size of a switch-on in tens of weeks. The two estimators answer different questions: the difference-in-differences estimates the effect of switching the programme on, including the weeks that follow, against states in which it stays off, while the CVAR estimates the response to a surprise in the weeks of benefits, conditional on the past of the cycle and of both programmes. With the never-triggered states as comparison units, the difference-in-differences finds that unemployment rises after EB switches on, significantly at impact, after six months and after three years. The sign is the opposite of the response of the VAR without controls, and the reason is the timing of the events: EB switches on as unemployment in a state starts to rise, and the rural states that never triggered it went through a much milder recession, so the treated states keep diverging from them after the event. The test of the design reaches the same conclusion from the trends, since it finds that these states do not share the stochastic trends of the treated states, which is the condition that parallel trends would require. With clean controls, which include the treated states in the years in which they had no extended benefits and are therefore closer to them, the estimate is close to zero at every horizon and agrees with the CVAR. Its bands are several times wider than those of the CVAR, because each event contributes a single comparison while the CVAR uses every month of the policy.
+
+\safeinput{tab_eb_lpdid.tex}
+
+\safeinput{tab_eb_states.tex}
+
+
+\section{The Low Carbon Fuel Standard\label{sec:lcfs}}
+
+This section reports in full the application that Section \ref{sec:lcfssum} of the paper summarises. Unlike the dividend and extended benefits, which react to the business cycle, the policy here is a cost that changes every month. California's Low Carbon Fuel Standard (LCFS) has been in force since 2011, with the stated goal of reducing the greenhouse gas emissions of transportation. It sets an annual benchmark for the average carbon intensity of the fuels sold in the state, which declines over time; the original target was a reduction of ten percent by 2020 relative to 2010. Fuels below the benchmark generate credits, and refiners and importers whose gasoline exceeds it incur deficits, which they cover by buying credits. The standard thereby creates a market for carbon intensity, and the cost of compliance per gallon of gasoline is the price of a credit multiplied by the deficit that a gallon generates, which grows as the benchmark tightens.
+
+Whether this cost is passed through to consumers as higher gasoline prices is disputed. The California Air Resources Board has argued that credit prices and retail gasoline prices show no relationship \citep{CARB2024}, while the cost per gallon that refiners report to the California Energy Commission follows the credit price closely \citep{KleinmanCenter2024}. The closest evidence comes from the federal Renewable Fuel Standard, for which \citet{KnittelMeiselmanStock2017} find that the price of compliance credits passes fully to wholesale fuel prices within days. They estimate a VAR in the price of the credits and in the spread between a fuel that must comply and a comparable fuel that need not, which is a CVAR with one control and a weight fixed at one. Their result is a useful benchmark, but it concerns a different programme and a different stage of the supply chain, and the pass-through of fuel-standard credits to retail prices has received little attention.
+
+Incidence theory predicts that a cost per gallon borne by suppliers passes almost fully to consumers, because the short-run demand for gasoline is very inelastic. The difficulty is empirical. Retail prices in California move with crude oil, with national refining margins and with the outages of its own refineries, and the credit price moves with the balance of the credit market and with the rules of the programme. A comparison of the two series mixes all of these movements. The CVAR compares California with regions that buy crude oil and refined products in the same markets without the standard, which removes the national movements in the price.
+
+The data for California are monthly, from January 2014 to July 2026. The outcome is the retail price of regular gasoline in California, in cents per gallon, the monthly average of the weekly prices of the Energy Information Administration, with calendar-month effects removed from its changes. The controls are the retail prices of regions without a comparable standard, in three sets: the Gulf Coast, where much of the refining capacity of the country is located; the average of the East Coast, Midwest, Gulf Coast and Rocky Mountain regions; and the average of Texas and Florida. I exclude the West Coast outside California, because Oregon and Washington run clean fuel standards of their own and Arizona and Nevada buy much of their gasoline from California refineries.
+
+The policy is the cost of the standard per gallon, in cents. Until April 2024 I compute it from the monthly average price of credits in the transfer reports of the Air Resources Board and the formula of the programme, with the gasoline benchmark of each year.\footnote{The cost per retail gallon is the credit price times the difference between the carbon intensity of the gasoline blendstock and the benchmark of the year, times the energy density of the blendstock and its share in a gallon of retail gasoline, which contains ten percent ethanol. The benchmarks are those of the regulation in force before the amendments of 2024. Appendix \ref{sec:data} gives the sources.} From May 2024 I use the cost that refiners report to the California Energy Commission. Over the months of 2024 in which both measures exist, the formula tracks the reported cost closely; from January 2025, after the amendments of 2024 tightened the benchmarks, the reported cost exceeds the formula. The cost has a stochastic trend, so the policy enters the VAR as its monthly change, and the response is to a permanent increase of one cent per gallon. Full pass-through is a response of one.
+
+Figure \ref{fig:ca-data} shows the cost of the standard and the retail prices. The price in California and the average price of the controls move together with crude oil, and the gap between them changes slowly, which is the movement specific to California that the test of the design leaves in the cycle.
+
+\begin{figure}[htbp]
+\centering\safegraphic[width=0.85\textwidth]{fig_ca_data.pdf}
+\caption{Low Carbon Fuel Standard: policy and outcomes. Top: cost of the standard per gallon of retail gasoline, from the formula of the programme until April 2024 and as reported by refiners to the California Energy Commission from May 2024 (vertical line); dotted, the formula over the whole sample. Bottom: retail price of regular gasoline in California and average of the East Coast, Midwest, Gulf Coast and Rocky Mountain regions, monthly averages of weekly prices. Cents per gallon, January 2014 to July 2026.\label{fig:ca-data}}
+\end{figure}
+
+
+As for extended benefits, the test of Section \ref{sec:test} does not reject a stochastic trend specific to California with any of the three sets of controls, so I estimate the CVAR in changes, with equal weights on the controls, which buy crude oil and refined products in the same national markets as California. The VAR contains the change in the cost and the change in the cycle, with the cost ordered first, and the VAR without controls replaces the cycle with the price in California. The lag order of each model follows the rule of Section \ref{sec:eb}. Assumption \ref{assu:A4d} requires that a change in the cost carries no news about the future path of the component of the price specific to California. The credit price is set in a market that responds to the balance of credits and deficits accumulated over years and to news about the rules of the programme, and in the data the past changes of the cycle do not predict it: the Wald test that the cycle does not Granger-cause the cost in the VAR of the CVAR does not reject with any set of controls, measure of the cost, sample or lag order.
+
+Figure \ref{fig:california_main} and Table \ref{tab:california_main} report the results. With every set of controls, the CVAR finds that the price of gasoline in California rises by about the increase in the cost within a month and stays near that level. The 68 percent bands exclude zero one month after the increase with every set of controls, and the 90 percent bands contain full pass-through at every horizon. The VAR without controls finds a response that keeps rising well above full pass-through, with bands up to about twice as wide as those of the CVAR that contain both zero and full pass-through. The CVAR delivers the answer that incidence theory predicts and that \citet{KnittelMeiselmanStock2017} find for federal credits at wholesale, with bands narrow enough to exclude the large responses that the VAR without controls cannot rule out.
+
+\safeinput{fig_california_main.tex}
+
+\safeinput{tab_california_main.tex}
+
+The result holds across a wide range of specifications, which Tables \ref{tab:california_robust} and \ref{tab:california_appendix} report. In the samples that start in 2017 and in 2020, when the cost per gallon is largest, the response at impact is larger, and in most of these specifications its 90 percent band excludes zero. Dropping any one region from the average of the controls leaves the response close to that of the main specification, and so does removing the years from 2020 to 2022 with a dummy for every month, which lowers the response at impact and leaves it unchanged one month later. The response at impact and one month later is stable across lag orders from one to twelve. With the cost computed from the formula over the whole sample, the responses are larger, as expected from a measure that understates the cost from 2025. Between 2014 and 2019 the cost per gallon was small and the policy varied little, and the responses are imprecise and of uncertain sign. Local projections reproduce the response of the CVAR and find no difference between increases and decreases of the cost, or between periods of high and low credit prices, that their bands can detect.
+
+\safeinput{tab_california_robust.tex}
+
+\safeinput{tab_california_appendix.tex}
+
+\bibliographystyle{apalike}
+\bibliography{bibliography}
+
+
+\end{document}

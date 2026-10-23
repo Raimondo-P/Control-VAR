@@ -1,0 +1,49 @@
+T,K,rho,stat,null,std_cv,sim_cv,reject_std_cv,reject_sim_cv
+200,3,0.5,adf_cycle,unit root,-4.152,-5.224,0.998,0.979
+200,3,0.9,adf_cycle,unit root,-4.152,-5.224,0.893,0.436
+200,3,1.0,adf_cycle,unit root,-4.152,-5.224,0.299,0.05
+200,3,0.5,adf_net,unit root,-4.152,-5.937,1.0,0.998
+200,3,0.9,adf_net,unit root,-4.152,-5.937,0.97,0.403
+200,3,1.0,adf_net,unit root,-4.152,-5.937,0.485,0.05
+200,3,0.5,kpss_cycle,stationarity,0.463,0.531,0.111,0.076
+200,3,0.9,kpss_cycle,stationarity,0.463,0.531,0.083,0.05
+200,3,1.0,kpss_cycle,stationarity,0.463,0.531,0.307,0.26
+200,3,0.5,kpss_net,stationarity,0.463,0.313,0.002,0.011
+200,3,0.9,kpss_net,stationarity,0.463,0.313,0.015,0.05
+200,3,1.0,kpss_net,stationarity,0.463,0.313,0.196,0.345
+200,6,0.5,adf_cycle,unit root,-4.792,-5.711,0.991,0.958
+200,6,0.9,adf_cycle,unit root,-4.792,-5.711,0.768,0.327
+200,6,1.0,adf_cycle,unit root,-4.792,-5.711,0.223,0.05
+200,6,0.5,adf_net,unit root,-4.792,-6.492,1.0,0.997
+200,6,0.9,adf_net,unit root,-4.792,-6.492,0.938,0.334
+200,6,1.0,adf_net,unit root,-4.792,-6.492,0.471,0.05
+200,6,0.5,kpss_cycle,stationarity,0.463,0.487,0.092,0.084
+200,6,0.9,kpss_cycle,stationarity,0.463,0.487,0.061,0.05
+200,6,1.0,kpss_cycle,stationarity,0.463,0.487,0.18,0.167
+200,6,0.5,kpss_net,stationarity,0.463,0.183,0.001,0.024
+200,6,0.9,kpss_net,stationarity,0.463,0.183,0.001,0.05
+200,6,1.0,kpss_net,stationarity,0.463,0.183,0.092,0.37
+400,3,0.5,adf_cycle,unit root,-4.124,-5.549,1.0,1.0
+400,3,0.9,adf_cycle,unit root,-4.124,-5.549,0.998,0.934
+400,3,1.0,adf_cycle,unit root,-4.124,-5.549,0.335,0.05
+400,3,0.5,adf_net,unit root,-4.124,-5.895,1.0,1.0
+400,3,0.9,adf_net,unit root,-4.124,-5.895,0.998,0.913
+400,3,1.0,adf_net,unit root,-4.124,-5.895,0.418,0.05
+400,3,0.5,kpss_cycle,stationarity,0.463,0.436,0.065,0.081
+400,3,0.9,kpss_cycle,stationarity,0.463,0.436,0.041,0.05
+400,3,1.0,kpss_cycle,stationarity,0.463,0.436,0.443,0.474
+400,3,0.5,kpss_net,stationarity,0.463,0.312,0.006,0.014
+400,3,0.9,kpss_net,stationarity,0.463,0.312,0.018,0.05
+400,3,1.0,kpss_net,stationarity,0.463,0.312,0.375,0.564
+400,6,0.5,adf_cycle,unit root,-4.749,-6.091,1.0,0.997
+400,6,0.9,adf_cycle,unit root,-4.749,-6.091,0.995,0.865
+400,6,1.0,adf_cycle,unit root,-4.749,-6.091,0.364,0.05
+400,6,0.5,adf_net,unit root,-4.749,-6.547,1.0,1.0
+400,6,0.9,adf_net,unit root,-4.749,-6.547,0.999,0.891
+400,6,1.0,adf_net,unit root,-4.749,-6.547,0.449,0.05
+400,6,0.5,kpss_cycle,stationarity,0.463,0.34,0.066,0.132
+400,6,0.9,kpss_cycle,stationarity,0.463,0.34,0.018,0.05
+400,6,1.0,kpss_cycle,stationarity,0.463,0.34,0.249,0.372
+400,6,0.5,kpss_net,stationarity,0.463,0.154,0.0,0.014
+400,6,0.9,kpss_net,stationarity,0.463,0.154,0.001,0.05
+400,6,1.0,kpss_net,stationarity,0.463,0.154,0.191,0.643

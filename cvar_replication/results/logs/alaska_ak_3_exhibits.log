@@ -1,0 +1,14 @@
+check: largest gap between the LAUS ratio and employment/population x 100: nan
+  epop: interpolated ['2025-10']
+  ur: interpolated ['2025-10']
+  lfpr: interpolated ['2025-10']
+  CPI: interpolated ['2025-10']
+re-estimating 6 outcomes, B = 999
+fig_alaska_main written
+tab_alaska_weights.tex written
+tab_alaska_main.tex written
+tab_alaska_bounds.tex written
+tab_alaska_samples.tex written
+tab_alaska_seasonal.tex written
+
+written to C:\Users\raimondo\Dropbox\Control VAR\cvar_replication\applications\..\results\paper

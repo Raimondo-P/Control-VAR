@@ -1,0 +1,55 @@
+\begin{table}[htbp]
+\centering
+\caption{Alaska: treatment of seasonality\label{tab:ak-seasonal}}
+\footnotesize
+\begin{tabular}{lccccc}
+\toprule
+Series & Sum of & \multicolumn{4}{c}{Months} \\
+\cmidrule(lr){3-6}
+ & weights & 1 & 3 & 12 & 24 \\
+\midrule
+\multicolumn{6}{l}{Employment-population ratio} \\
+Adjusted & 0.57 & 0.01 & $-$0.00 & $-$0.08 & $-$0.16 \\
+Adjusted, month effects & 0.57 & 0.02 & 0.00 & $-$0.09 & $-$0.17 \\
+Unadjusted, month effects & 1.20 & 0.27$^{*}$ & 0.22$^{*}$ & 0.40$^{*}$ & 0.53$^{*}$ \\
+Unadjusted, month effects $\times$ trend & 0.94 & 0.24$^{*}$ & 0.19$^{*}$ & 0.35$^{*}$ & 0.47 \\
+Unadjusted, month effects by decade & 0.92 & 0.27$^{*}$ & 0.19 & 0.31 & 0.35 \\
+\addlinespace
+\multicolumn{6}{l}{Unemployment rate} \\
+Adjusted & 0.49 & $-$0.01 & $-$0.01 & 0.01 & 0.03 \\
+Adjusted, month effects & 0.49 & $-$0.02 & $-$0.03 & $-$0.00 & 0.02 \\
+Unadjusted, month effects & 0.98 & $-$0.16$^{*}$ & $-$0.21$^{*}$ & $-$0.15 & $-$0.21 \\
+Unadjusted, month effects $\times$ trend & 0.93 & $-$0.13$^{*}$ & $-$0.17$^{*}$ & $-$0.09 & $-$0.12 \\
+Unadjusted, month effects by decade & 0.96 & $-$0.10$^{*}$ & $-$0.14$^{*}$ & $-$0.05 & $-$0.07 \\
+\addlinespace
+\multicolumn{6}{l}{Participation rate} \\
+Adjusted & 0.40 & 0.00 & $-$0.02 & $-$0.15$^{*}$ & $-$0.25$^{*}$ \\
+Adjusted, month effects & 0.41 & 0.01 & $-$0.02 & $-$0.18$^{*}$ & $-$0.28$^{*}$ \\
+Unadjusted, month effects & 1.12 & 0.14 & 0.04 & 0.17 & 0.14 \\
+Unadjusted, month effects $\times$ trend & 0.92 & 0.15$^{*}$ & 0.06 & 0.15 & 0.14 \\
+Unadjusted, month effects by decade & 0.90 & 0.18$^{*}$ & 0.03 & 0.09 & 0.07 \\
+\addlinespace
+\multicolumn{6}{l}{Payroll employment} \\
+Adjusted & 0.30 & $-$0.02 & 0.05 & 0.42$^{*}$ & 0.77$^{*}$ \\
+Adjusted, month effects & 0.27 & $-$0.03 & 0.07 & 0.44 & 0.80$^{*}$ \\
+Unadjusted, month effects & 0.33 & 0.02 & 0.43$^{*}$ & $-$0.18 & $-$0.22 \\
+Unadjusted, month effects $\times$ trend & 0.30 & 0.04 & 0.33 & 0.21 & 0.49 \\
+Unadjusted, month effects by decade & 0.46 & 0.13 & 0.46$^{*}$ & 0.27 & 0.44 \\
+\addlinespace
+\multicolumn{6}{l}{Leisure and hospitality} \\
+Adjusted & 0.90 & $-$0.03 & 0.26 & 1.16$^{*}$ & 1.71$^{*}$ \\
+Adjusted, month effects & 0.88 & 0.38 & 0.57$^{*}$ & 1.32$^{*}$ & 1.75$^{*}$ \\
+Unadjusted, month effects & 0.65 & 0.65$^{*}$ & 0.50 & 0.65 & 1.05 \\
+Unadjusted, month effects $\times$ trend & 0.62 & 0.45 & 0.54 & 0.84$^{*}$ & 1.26$^{*}$ \\
+Unadjusted, month effects by decade & 0.61 & 0.46 & 0.44 & 0.93 & 1.12 \\
+\addlinespace
+\multicolumn{6}{l}{Retail trade} \\
+Adjusted & 0.52 & 0.01 & 0.02 & 0.21 & 0.37 \\
+Adjusted, month effects & 0.52 & 0.08 & 0.16 & 0.32 & 0.40 \\
+Unadjusted, month effects & 0.77 & 0.20 & $-$0.00 & 0.77 & 1.07 \\
+Unadjusted, month effects $\times$ trend & 0.43 & $-$0.03 & $-$0.10 & $-$0.12 & $-$0.49 \\
+Unadjusted, month effects by decade & 0.49 & $-$0.01 & $-$0.25 & $-$0.39 & $-$0.85 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize CVAR of Table \ref{tab:ak-main}, January 1976 (payroll series January 1990) to December 2019, with the seasonally adjusted series (main), the adjusted series with month effects, and the unadjusted series with month effects, with month effects interacted with a linear trend, and with month effects by decade, in the weights regression and in the VAR. Weights re-estimated in each version and held at their estimates in the residual bootstrap. $^{*}$: the 90 percent band excludes zero.}
+\end{table}

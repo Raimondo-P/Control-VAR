@@ -1,0 +1,69 @@
+sample 2014-01 to 2026-08; CEC cost from 2024-05
+
+B. Main specifications
+  gulf spliced: lags 4/4, design p 0.353, h=0 CVAR 0.99 [-0.21, 2.47], h=12 0.88
+  gulf spliced_jan: lags 2/2, design p 0.353, h=0 CVAR 1.42 [-0.54, 3.46], h=12 1.06
+  gulf tv: lags 12/10, design p 0.399, h=0 CVAR 2.75 [0.15, 5.17], h=12 1.65
+  gulf tv_jan: lags 3/3, design p 0.399, h=0 CVAR 4.22 [1.05, 7.09], h=12 1.89
+  gulf const: lags 2/2, design p 0.364, h=0 CVAR 1.54 [0.10, 3.02], h=12 0.66
+  padd1_4 spliced: lags 4/4, design p 0.332, h=0 CVAR 0.65 [-0.46, 1.93], h=12 0.87
+  padd1_4 spliced_jan: lags 2/2, design p 0.332, h=0 CVAR 1.04 [-0.74, 3.09], h=12 1.12
+  padd1_4 tv: lags 12/10, design p 0.383, h=0 CVAR 1.65 [-0.74, 4.06], h=12 1.60
+  padd1_4 tv_jan: lags 3/3, design p 0.383, h=0 CVAR 3.17 [0.07, 6.04], h=12 1.97
+  padd1_4 const: lags 2/2, design p 0.261, h=0 CVAR 1.28 [-0.18, 2.93], h=12 0.62
+  tx_fl spliced: lags 4/4, design p 0.340, h=0 CVAR 1.11 [-0.19, 2.67], h=12 1.03
+  tx_fl spliced_jan: lags 2/2, design p 0.340, h=0 CVAR 1.59 [-0.59, 4.01], h=12 1.18
+  tx_fl tv: lags 12/10, design p 0.371, h=0 CVAR 3.00 [0.17, 5.70], h=12 2.09
+  tx_fl tv_jan: lags 3/3, design p 0.371, h=0 CVAR 4.60 [0.92, 7.87], h=12 2.33
+  tx_fl const: lags 2/2, design p 0.318, h=0 CVAR 1.71 [0.07, 3.57], h=12 0.66
+
+C. Lag orders 1 to 12
+  gulf p=1: h=0 1.20, h=12 1.98 [0.02, 4.48]
+  gulf p=2: h=0 1.06, h=12 0.76 [-1.10, 2.96]
+  gulf p=3: h=0 1.00, h=12 1.00 [-1.43, 3.08]
+  gulf p=4: h=0 0.99, h=12 0.88 [-1.32, 3.14]
+  gulf p=5: h=0 0.98, h=12 1.07 [-1.30, 3.35]
+  gulf p=6: h=0 1.01, h=12 1.15 [-1.40, 4.18]
+  gulf p=7: h=0 1.01, h=12 1.09 [-1.71, 3.81]
+  gulf p=8: h=0 1.00, h=12 0.93 [-1.95, 3.46]
+  gulf p=9: h=0 0.80, h=12 0.52 [-1.75, 2.85]
+  gulf p=10: h=0 0.82, h=12 0.63 [-1.39, 3.08]
+  gulf p=11: h=0 0.85, h=12 0.58 [-2.19, 3.38]
+  gulf p=12: h=0 1.07, h=12 -0.00 [-3.10, 3.43]
+  padd1_4 p=1: h=0 0.82, h=12 1.84 [0.06, 4.01]
+  padd1_4 p=2: h=0 0.77, h=12 0.88 [-0.92, 3.19]
+  padd1_4 p=3: h=0 0.69, h=12 1.03 [-1.19, 3.16]
+  padd1_4 p=4: h=0 0.65, h=12 0.87 [-1.15, 2.92]
+  padd1_4 p=5: h=0 0.66, h=12 1.00 [-1.18, 3.09]
+  padd1_4 p=6: h=0 0.66, h=12 1.39 [-1.13, 4.31]
+  padd1_4 p=7: h=0 0.66, h=12 1.21 [-1.54, 3.83]
+  padd1_4 p=8: h=0 0.67, h=12 1.08 [-1.54, 3.56]
+  padd1_4 p=9: h=0 0.53, h=12 0.74 [-1.35, 3.12]
+  padd1_4 p=10: h=0 0.53, h=12 0.50 [-1.74, 2.85]
+  padd1_4 p=11: h=0 0.50, h=12 0.90 [-1.54, 3.69]
+  padd1_4 p=12: h=0 0.69, h=12 0.47 [-2.63, 3.93]
+
+D. Samples
+  gulf 2014_2019: T 72, design p 0.179 (differenced), rule lags 1/1, h=0 -0.36
+  gulf 2014_2024: T 132, design p 0.454 (differenced), rule lags 12/12, h=0 2.47
+  gulf 2017_end: T 116, design p 0.320 (differenced), rule lags 3/3, h=0 1.50
+  gulf 2020_end: T 80, design p 0.187 (differenced), rule lags 2/2, h=0 1.78
+  gulf full: T 152, design p 0.353 (differenced), rule lags 4/4, h=0 1.06
+  padd1_4 2014_2019: T 72, design p 0.045 (levels), rule lags 1/1, h=0 -1.60
+  padd1_4 2014_2024: T 132, design p 0.425 (differenced), rule lags 12/12, h=0 2.04
+  padd1_4 2017_end: T 116, design p 0.485 (differenced), rule lags 4/3, h=0 1.29
+  padd1_4 2020_end: T 80, design p 0.238 (differenced), rule lags 2/2, h=0 1.49
+  padd1_4 full: T 152, design p 0.332 (differenced), rule lags 4/4, h=0 0.77
+
+E. PADDs 1-4 leaving one out
+  without gas_r10: h=0 0.55, h=12 0.81
+  without gas_r20: h=0 0.60, h=12 0.76
+  without gas_gulf: h=0 0.53, h=12 0.86
+  without gas_r40: h=0 0.91, h=12 1.02
+
+F. Local projections
+  gulf done
+  padd1_4 done
+  terms: linear coef1 = cost change; increase_decrease coef1 = increases, coef2 = decreases; high_low_credit coef1 = high credit price, coef2 = low
+
+written to C:\Users\raimondo\Dropbox\Control VAR\cvar_replication\applications\..\results\california

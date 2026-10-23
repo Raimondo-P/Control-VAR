@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\caption{The test of the design on US states, regions and metropolitan areas\label{tab:screen}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.2cm}cccccc}
+\toprule
+ & Units & Observations & \multicolumn{3}{c}{Share rejecting at 5 percent} & Gap stationary, \\
+\cmidrule(lr){4-6}
+ & & & Alone & Equal & Estimated & series I(1) \\
+\midrule
+Employment-population ratio & 49 & 528 months & 0.00 & 0.08 & 0.10 & 7 \\
+Participation rate & 49 & 528 months & 0.00 & 0.14 & 0.04 & 8 \\
+Payroll employment & 49 & 360 months & 0.00 & 0.02 & 0.00 & 1 \\
+Coincident index & 48 & 492 months & 0.00 & 0.00 & 0.02 & 1 \\
+Personal income & 49 & 288 quarters & 0.02 & 0.02 & 0.00 & 1 \\
+House prices & 49 & 180 quarters & 0.00 & 0.04 & 0.02 & 3 \\
+Consumer prices, Census regions & 4 & 495 months & 0.00 & 0.00 & 0.00 & 0 \\
+Consumer prices, three metropolitan areas & 3 & 993 months & 0.00 & 0.00 & 0.00 & 0 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize Test of Section \ref{sec:test} with a constant and no policy terms, sieve-bootstrap p-values with 499 draws. The 48 contiguous states and the District of Columbia, each against the states it borders; consumer prices for each Census region against the other three, and for New York, Chicago and Los Angeles against the other two. Observations: median sample length, from the start of each series (1976 for the employment-population ratio and the participation rate, 1990 for payroll employment, 1979 for the coincident index, 1948 for personal income, 1975 for house prices, 1966 for the regions and 1914 for the metropolitan areas) to the end of 2019. Alone: the unit without controls. Equal: the unit minus the average of its neighbours. Estimated: weights on the neighbours estimated inside the test. Last column: number of units for which the unit alone does not reject at 10 percent and the gap with the neighbours rejects at 5 percent with equal or estimated weights.}
+\end{table}

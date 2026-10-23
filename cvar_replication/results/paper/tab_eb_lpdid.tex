@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Extended benefits: local-projection difference-in-differences and the CVAR\label{tab:eb-lpdid}}
+\small
+\begin{tabular}{ccccc}
+\toprule
+ & \multicolumn{2}{c}{LP difference-in-differences} & \multicolumn{2}{c}{VAR responses} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Months & Never-triggered controls & Clean controls & CVAR & VAR without controls \\
+\midrule
+0 & 0.07 [0.02, 0.12] & $-$0.01 [$-$0.05, 0.03] & $-$0.00 [$-$0.02, 0.01] & $-$0.03 [$-$0.05, $-$0.01] \\
+6 & 0.46 [0.10, 0.82] & 0.22 [$-$0.14, 0.58] & 0.03 [$-$0.03, 0.11] & $-$0.23 [$-$0.32, $-$0.11] \\
+12 & 0.37 [$-$0.08, 0.81] & 0.10 [$-$0.33, 0.53] & 0.05 [$-$0.06, 0.17] & $-$0.33 [$-$0.47, $-$0.13] \\
+24 & 0.31 [$-$0.17, 0.79] & $-$0.07 [$-$0.58, 0.44] & 0.03 [$-$0.16, 0.17] & $-$0.52 [$-$0.75, $-$0.25] \\
+36 & 0.62 [0.08, 1.16] & $-$0.07 [$-$0.77, 0.63] & $-$0.02 [$-$0.24, 0.13] & $-$0.68 [$-$0.93, $-$0.40] \\
+\bottomrule
+\end{tabular}
+\par\smallskip\parbox{0.95\textwidth}{\footnotesize Change in the unemployment rate in percentage points. LP difference-in-differences \citep{dube2023local}: response to EB switching on in a state (38 events with no EB in the previous twelve months), with month fixed effects, four lags of the change in the unemployment rate and the current value and four lags of the change in the weeks of EUC; controls are the never-triggered states, or every state-month without EB in the twelve months before the event and up to the horizon. The coefficients are divided by the average size of a switch-on, 0.90 tens of weeks, to express them per ten weeks; 90 percent bands from standard errors clustered by state. CVAR and VAR without controls: average response to an EB innovation of ten weeks, from Table \ref{tab:eb-avg}.}
+\end{table}
