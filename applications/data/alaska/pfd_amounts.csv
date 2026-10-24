@@ -1,9 +1,10 @@
 # Alaska Permanent Fund Dividend per person, nominal dollars, by payment year.
-# dividend = regular dividend; extra = one-off additions paid with it (2008 Resource Rebate, 2022 energy relief).
+# dividend = regular dividend; extra = one-off additions paid with it (2008 Resource Rebate, 2022 and 2024 energy relief).
 # pay_month = month of the main disbursement (June in 1982, October afterwards).
-# These values were typed from recollection and MUST be checked against the PFD Division table
-# "Summary of Applications and Payments" (pfd.alaska.gov) before any result is used. Rows marked
-# check_closely are the ones I am least sure about. Lines starting with a hash are ignored.
+# Source: Alaska Department of Revenue, Permanent Fund Dividend Division, Summary of Dividend Applications and
+# Payments (https://pfd.alaska.gov/Division-Info/summary-of-dividend-applications-payments), checked October 2026.
+# dividend + extra equals the Dividend Amount of that table, except in 2008, where the 1,200 dollar Resource Rebate
+# was paid with the dividend but is not part of the table. Lines starting with a hash are ignored.
 year,pay_month,dividend,extra,note
 1982,6,1000.00,0,
 1983,10,386.15,0,
@@ -43,9 +44,9 @@ year,pay_month,dividend,extra,note
 2017,10,1100.00,0,
 2018,10,1600.00,0,
 2019,10,1606.00,0,
-2020,10,992.00,0,check_closely
-2021,10,1114.00,0,check_closely
-2022,10,2622.00,662.00,energy relief; check_closely
-2023,10,1312.00,0,check_closely
-2024,10,1702.00,0,check_closely
-2025,10,1000.00,0,check_closely
+2020,10,992.00,0,
+2021,10,1114.00,0,
+2022,10,2622.00,662.00,energy relief
+2023,10,1312.00,0,
+2024,10,1403.83,298.17,energy relief
+2025,10,1000.00,0,

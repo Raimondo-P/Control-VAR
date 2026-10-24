@@ -15,7 +15,7 @@ Outcomes (monthly, seasonally adjusted):
   CES (from 1990): nonfarm, retail, leisure, 100 x log of employment (retail and leisure are nontradable)
 Policies in the weights regression (current value and 12 lags):
   W    the dividend paid in the month, thousands of 2024 dollars per person (zero in other months), from
-       data/alaska/pfd_amounts.csv (verify that file against the PFD Division before using any result)
+       data/alaska/pfd_amounts.csv (Alaska Department of Revenue, PFD Division)
   oil  100 x monthly change in log WTI (FRED WTISPLC), ordered first
 Specifications of the test:
   estimated         estimated weights (DOLS, non-negative, Johansen rank step), no level shifts

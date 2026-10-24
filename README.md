@@ -1,9 +1,8 @@
 # Replication package: Control VAR
 
 Code and data for "Control VAR: a counterfactual based approach to inference in macroeconomics" (Raimondo Pala).
-Everything is in Python; the CVAR itself is the package in `applications/cvar` (also released, with a MATLAB
-version, as the library `controlvar`). A full replication README, with the map from every exhibit to the script
-that produces it and the run times, accompanies the release.
+Everything is in Python; the CVAR itself is the package in `applications/cvar`. The map from the simulation
+exhibits to the scripts that produce them, with run times, is in `simulations/README.md`.
 
 ## Running
 
